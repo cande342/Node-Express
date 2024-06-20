@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto</title>
+    <link rel="stylesheet" type="text/css" href="/styles/styles.css">
+    <link rel="shortcut icon" href="../images/logo.ico"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Reddit+Mono:wght@200..900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/95fbe8c037.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <header> 
+        <div class="navegador">
+            <div class="logo">
+                <a href="../index.html"> <img src="../images/logo-nav.png"/> </a>
+            </div>
+            <nav class="nav-items">
+                <ul>
+                    <li><a href="../index.html"><i class="fas fa-home" style="color: #161717;"></i> Inicio</a></li>
+                    <li><a href="destinos.html"><i class="fas fa-map-marker-alt" style="color: #161717;"></i> Destinos</a></li>
+                    <li><a href="servicios.html"><i class="fas fa-bell" style="color: #1c1c1c;"></i> Servicios</a></li>
+                    <li><a href="login.html"><i class="fas fa-user" style="color: #1c1c1c;"></i> Iniciar Sesión</a></li>
+                </ul>
+            </nav>
+            <i class="fas fa-bars" id="menu-toggle"></i>
+        </div>
+    </header>
+
+        <!-- Formulario para agregar DESTINOS -->
+
+        <div class="container-form">
+            <h1>Añadir un nuevo Destino</h1>
+        
+        <div class="columns"> 
+            <div class="column-izq"> 
+            <form id="destinoForm">
+                <label for="name_destino">Nombre del destino:</label>
+                <input type="text" id="name_destino" name="name_destino" required>
+    
+                <label for="province">Provincia:</label>
+                <select id="province" name="province" required>
+                    <option value="" disabled selected>Seleccione una provincia</option>
+                    <option value="1">Buenos Aires</option>
+                    <option value="2">Catamarca</option>
+                    <option value="3">Chaco</option>
+                    <option value="4">Chubut</option>
+                    <option value="5">Córdoba</option>
+                    <option value="6">Corrientes</option>
+                    <option value="7">Entre Ríos</option>
+                    <option value="8">Formosa</option>
+                    <option value="9">Jujuy</option>
+                    <option value="10">La Pampa</option>
+                    <option value="11">La Rioja</option>
+                    <option value="12">Mendoza</option>
+                    <option value="13">Misiones</option>
+                    <option value="14">Neuquén</option>
+                    <option value="15">Río Negro</option>
+                    <option value="16">Salta</option>
+                    <option value="17">San Juan</option>
+                    <option value="18">San Luis</option>
+                    <option value="19">Santa Cruz</option>
+                    <option value="20">Santa Fe</option>
+                    <option value="21">Santiago del Estero</option>
+                    <option value="22">Tierra del Fuego</option>
+                    <option value="23">Tucumán</option>
+                </select>
+    
+                <label for="description">Descripción:</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+            </div>
+
+        <div class="column-der"> 
+                <label for="categoria">Categoría:</label>
+                <select id="categoria" name="categoria" multiple required>
+                    <option value="1">Montaña</option>
+                    <option value="2">Playa</option>
+                    <option value="3">Ciudad</option>
+                    <option value="4">Selva</option>
+                    <option value="5">Desierto</option>
+                </select>
+    
+                <div class="selected-categories" id="selectedCategories">
+                    <p>Categorías seleccionadas:</p>
+                </div>
+        </div>       
+        </div>
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+        
+     <!-- Página que ven los usuarios -->
+    <main>
+         <aside>
+            <div class="filter-content">
+                <h2 class="filter-heading">Explora por Categoría</h2>
+                <ul>
+                    <li>Tipo de destino:
+                        <ul>
+                            <li class="category-item">Playas</li>
+                            <li class="category-item">Montañas</li>
+                            <li class="category-item">Ciudades históricas</li>
+                            <li class="category-item">Parques naturales</li>
+                        </ul>
+                    </li>
+                    <li>Actividades:
+                        <ul>
+                            <li class="category-item">Deportes acuáticos</li>
+                            <li class="category-item">Senderismo</li>
+                            <li class="category-item">Esquí</li>
+                            <li class="category-item">Turismo cultural</li>
+                        </ul>
+                    </li>
+                    <li>Temporada:
+                        <ul>
+                            <li class="category-item">Verano</li>
+                            <li class="category-item">Invierno</li>
+                            <li class="category-item">Otoño</li>
+                            <li class="category-item">Primavera</li>
+                        </ul>
+                    </li>
+                    <li>Atracciones turísticas:
+                        <ul>
+                            <li class="category-item">Monumentos famosos</li>
+                            <li class="category-item">Sitios arqueológicos</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+         
+        <section class="filter-search">
+            <select id="categorySelect">
+                <option value="" disabled selected>Categorías</option>
+                <option value="naturaleza">Ciudades Históricas</option>
+                <option value="aventura">Montañas</option>
+                <option value="cultura">Playas</option>
+                <option value="gastronomia">Parques Nacionales</option>
+            </select>
+        </section>
+        
+
+        <div class="main-content">
+            <section class="img-galeria">
+                <div class="card-container">
+                    <!-- Acá las tarjetas desde JavaScript -->
+                </div>
+            </section>
+        </div>
+        
+
+        <div id="modal" class="modal">
+            <div class="modal-content">
+
+                <h2>Título del Lugar</h2>
+                <span class="close">&times;</span>
+            </div>
+        </div>
+        
+    </main>
+
+
+    <script src="scripts/form_destinos.js"></script>
+</body>
+</html>
