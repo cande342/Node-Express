@@ -1,5 +1,5 @@
 // src/controllers/destinoController.js
-const { crearDestino } = require('../models/destinoModel');
+const { crearDestino, obtenerDestinos } = require('../models/destinoModel');
 
 const crearDestinoController = async (req, res) => {
     const { name_destino, description, province, categories } = req.body;
@@ -17,6 +17,16 @@ const crearDestinoController = async (req, res) => {
     }
 };
 
+const obtenerDestinosController = async (req, res) => {
+    try {
+        const destinos = await obtenerDestinos();
+        res.json(destinos);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener los destinos' });
+    }
+};
+
 module.exports = {
     crearDestinoController,
+    obtenerDestinosController,
 };

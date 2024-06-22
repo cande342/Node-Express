@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 
-const { crearDestinoController } = require('../controllers/destinoController');
+const { crearDestinoController, obtenerDestinosController } = require('../controllers/destinoController');
 
 
 // Ruta de inicio
@@ -15,6 +15,7 @@ router.get('/destinos', (req, res) => {
   res.sendFile(path.join(__dirname, '../../public/destinos.html'));
 });
 router.post('/destinos', crearDestinoController);
+router.get('/api/destinos', obtenerDestinosController);
 
 // Rutas de Servicios
 //router.use('/servicios', serviciosRoutes);
