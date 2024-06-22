@@ -49,8 +49,27 @@ const obtenerDestinos = async () => {
         throw error;
     }
 };
+
+// En destinoModel.js
+const eliminarDestino = async (id_destino) => {
+    try {
+        const [result] = await connection.promise().query(
+            'DELETE FROM destinos WHERE id_destino = ?',
+            [id_destino]
+        );
+
+        return result.affectedRows > 0; // Retorna true si se afectó alguna fila (es decir, si se eliminó algún registro)
+    } catch (error) {
+        console.error('Error al eliminar el destino en el modelo:', error);
+        throw error;
+    }
+};
+
+
+
 module.exports = {
     crearDestino,
     obtenerDestinos,
+    eliminarDestino,
 };
 

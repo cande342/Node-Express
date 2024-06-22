@@ -1,5 +1,5 @@
 // src/controllers/destinoController.js
-const { crearDestino, obtenerDestinos } = require('../models/destinoModel');
+const { crearDestino, obtenerDestinos, eliminarDestino } = require('../models/destinoModel');
 
 const crearDestinoController = async (req, res) => {
     const { name_destino, description, province, categories } = req.body;
@@ -26,7 +26,24 @@ const obtenerDestinosController = async (req, res) => {
     }
 };
 
+const eliminarDestinoController = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const resultado = await eliminarDestino(id);
+        if (resultado) {
+            res.status(200).json({ message: 'Destino eliminado correctamente' });
+        } else {
+            res.status(404).json({ error: 'Destino no encontrado' });
+        }
+    } catch (error) {
+        console.error('Error al eliminar el destino:', error);
+        res.status(500).json({ error: 'Error interno al eliminar el destino' });
+    }
+};
+
 module.exports = {
     crearDestinoController,
     obtenerDestinosController,
+    eliminarDestinoController,
 };
