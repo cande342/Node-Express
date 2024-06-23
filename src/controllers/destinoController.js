@@ -19,7 +19,7 @@ const crearDestinoController = async (req, res) => {
         const categoriasArray = JSON.parse(categorias).map(id => parseInt(id));
         
         // Obtener el nombre del archivo (multer ya guarda el archivo en 'req.file')
-        const img_path = req.file ? req.file.path : null;
+        const img_path = req.file ? req.file.filename : null;
 
         // Llamar al método para crear un destino en el modelo, incluyendo la imagen
         const nuevoDestinoId = await crearDestino(name_destino, descripcion, id_provincia, categoriasArray, img_path);

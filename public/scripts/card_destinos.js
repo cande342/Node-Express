@@ -17,8 +17,9 @@ document.addEventListener("DOMContentLoaded", function() {
         card.classList.add('card');
         card.setAttribute('data-id', lugar.id_destino);
 
+  
         const img = document.createElement('img');
-        img.src = 'ruta/a/la/imagen'; // Reemplaza esto por la URL correcta si la tienes
+        img.src = `http://localhost:3001/uploads/${lugar.img_path}`;
         img.alt = lugar.name_destino;
 
         const title = document.createElement('h2');

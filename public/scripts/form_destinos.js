@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const province = parseInt(formData.get('province'));
         const descripcion = formData.get('descripcion');
         const categorias = formData.getAll('categorias').map(id => parseInt(id));
-        const imagen_destino = formData.get('imagen_destino'); // Obtener el archivo
+        const imagen_destino = formData.get('imagen_destino');
     
         // Convertir categorias a JSON antes de enviarlo
         formData.set('categorias', JSON.stringify(categorias));

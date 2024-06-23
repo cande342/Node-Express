@@ -35,12 +35,12 @@ const crearDestino = async (name_destino, descripcion, id_provincia, categorias,
 const obtenerDestinos = async () => {
     try {
         const query = `
-            SELECT d.id_destino, d.name_destino, d.descripcion, p.nombre_provincia, GROUP_CONCAT(c.nombre_categoria) AS categorias
+            SELECT d.id_destino, d.name_destino, d.descripcion, p.nombre_provincia, d.img_path, GROUP_CONCAT(c.nombre_categoria) AS categorias
             FROM Destinos d
             JOIN Provincia p ON d.id_provincia = p.id_provincia
             LEFT JOIN Destinos_Categorias dc ON d.id_destino = dc.id_destino
             LEFT JOIN Categorias c ON dc.id_categoria = c.id_categoria
-            GROUP BY d.id_destino, d.name_destino, d.descripcion, p.nombre_provincia
+            GROUP BY d.id_destino, d.name_destino, d.descripcion, p.nombre_provincia, d.img_path;
         `;
 
         const [results, fields] = await connection.promise().query(query);

@@ -6,30 +6,27 @@ const db = require('./src/db');
 
 const app = express();
 
-
 // Configuración de Multer para la subida de archivos
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-      cb(null, 'uploads/'); // Directorio donde se guardarán los archivos
+    cb(null, 'uploads/'); // Directorio donde se guardarán los archivos
   },
   filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-      cb(null, uniqueSuffix + path.extname(file.originalname)); // Nombre del archivo
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + path.extname(file.originalname)); // Nombre del archivo
   }
 });
 
 // Filtro para aceptar solo ciertos tipos de archivos
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-      cb(null, true);
+    cb(null, true);
   } else {
-      cb(null, false);
+    cb(null, false);
   }
 };
 
 const upload = multer({ storage, fileFilter });
-
-
 
 // Middleware para manejar datos JSON
 app.use(express.json());
@@ -37,15 +34,16 @@ app.use(express.json());
 // Middleware para manejar datos codificados en URL (formularios HTML)
 app.use(express.urlencoded({ extended: true }));
 
-// Ruta para archivos estáticos (HTML, CSS, imágenes, etc.)
+// Middleware para servir archivos estáticos (HTML, CSS, imágenes, etc.)
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); 
 
 // Importar controladores
-const { 
-  obtenerDestinosController, 
-  crearDestinoController, 
-  eliminarDestinoController, 
-  actualizarDestinoController 
+const {
+  obtenerDestinosController,
+  crearDestinoController,
+  eliminarDestinoController,
+  actualizarDestinoController
 } = require('./src/controllers/destinoController');
 
 // Ruta de inicio
