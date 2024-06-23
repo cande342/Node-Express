@@ -30,68 +30,45 @@
         </div>
     </header>
 
-        <!-- Formulario para agregar DESTINOS -->
-
-        <div class="container-form">
-            <h1>Añadir un nuevo Destino</h1>
-        
-        <div class="columns"> 
-            <div class="column-izq"> 
-            <form id="destinoForm">
-                <label for="name_destino">Nombre del destino:</label>
-                <input type="text" id="name_destino" name="name_destino" required>
     
-                <label for="province">Provincia:</label>
-                <select id="province" name="province" required>
-                    <option value="" disabled selected>Seleccione una provincia</option>
-                    <option value="1">Buenos Aires</option>
-                    <option value="2">Catamarca</option>
-                    <option value="3">Chaco</option>
-                    <option value="4">Chubut</option>
-                    <option value="5">Córdoba</option>
-                    <option value="6">Corrientes</option>
-                    <option value="7">Entre Ríos</option>
-                    <option value="8">Formosa</option>
-                    <option value="9">Jujuy</option>
-                    <option value="10">La Pampa</option>
-                    <option value="11">La Rioja</option>
-                    <option value="12">Mendoza</option>
-                    <option value="13">Misiones</option>
-                    <option value="14">Neuquén</option>
-                    <option value="15">Río Negro</option>
-                    <option value="16">Salta</option>
-                    <option value="17">San Juan</option>
-                    <option value="18">San Luis</option>
-                    <option value="19">Santa Cruz</option>
-                    <option value="20">Santa Fe</option>
-                    <option value="21">Santiago del Estero</option>
-                    <option value="22">Tierra del Fuego</option>
-                    <option value="23">Tucumán</option>
-                </select>
+    <div class="container-form">
+        <h1>Añadir un nuevo Destino</h1>
+        <div class="columns">
+            <div class="column-izq">
+                <form id="destinoForm">
+                    <label for="name_destino">Nombre del destino:</label>
+                    <input type="text" id="name_destino" name="name_destino" required>
     
-                <label for="description">Descripción:</label>
-                <textarea id="description" name="description" rows="4" required></textarea>
+                    <label for="province">Provincia:</label>
+                    <select id="province" name="province" required>
+                        <option value="" disabled selected>Seleccione una provincia</option>
+                        <option value="1">Buenos Aires</option>
+                        <option value="2">Catamarca</option>
+                        <!-- Otras opciones de provincias -->
+                    </select>
+    
+                    <label for="descripcion">Descripción:</label>
+                    <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
             </div>
-
-        <div class="column-der"> 
-                <label for="categoria">Categoría:</label>
-                <select id="categoria" name="categoria" multiple required>
+            <div class="column-der">
+                <label for="categoria">Categorías:</label>
+                <select id="categoria" name="categorias" multiple required>
                     <option value="1">Ciudad</option>
                     <option value="2">Playa</option>
-                    <option value="3">Montaña</option>
-                    <option value="4">Selva</option>
-                    <option value="5">Desierto</option>
+                    <!-- Otras opciones de categorías -->
                 </select>
     
                 <div class="selected-categories" id="selectedCategories">
                     <p>Categorías seleccionadas:</p>
                 </div>
-        </div>       
+            </div>
         </div>
-                <button type="submit">Enviar</button>
-            </form>
-        </div>
-        
+        <button type="submit">Crear</button>
+        </form>
+    </div>
+    
+
+
      <!-- Página que ven los usuarios -->
     <main>
          <aside>

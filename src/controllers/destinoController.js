@@ -4,14 +4,22 @@ const {
     eliminarDestino,
     actualizarDestino,
     actualizarCategoriasDestino,
-    obtenerDestinoPorId  // Importar esta función también
+    obtenerDestinoPorId,
 } = require('../models/destinoModel');
 
-// METODO POST
+// METODO POST para crear un nuevo destino
 const crearDestinoController = async (req, res) => {
-    const { name_destino, descripcion, id_provincia, categorias } = req.body;
-    
+    const { name_destino, descripcion, province, categorias } = req.body;
+
     try {
+        // Validar que todos los campos requeridos estén presentes y sean válidos
+        if (!name_destino || !descripcion || !province || !categorias || !Array.isArray(categorias)) {
+            return res.status(400).json({ message: 'Todos los campos son requeridos y deben estar en el formato correcto' });
+        }
+
+        // Convertir el campo 'province' a número (si es necesario)
+        const id_provincia = parseInt(province);
+
         // Llamar al método para crear un destino en el modelo
         const nuevoDestinoId = await crearDestino(name_destino, descripcion, id_provincia, categorias);
 
@@ -20,7 +28,7 @@ const crearDestinoController = async (req, res) => {
     } catch (error) {
         // Manejo de errores
         console.error('Error al crear el destino:', error);
-        res.status(500).json({ message: 'Hubo un error al crear el destino en el controller' });
+        res.status(500).json({ message: 'Hubo un error al crear el destino en el servidor' });
     }
 };
 

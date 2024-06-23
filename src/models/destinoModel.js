@@ -16,13 +16,11 @@ const crearDestino = async (name_destino, descripcion, id_provincia, categorias)
 
         // Insertar relaciones en la tabla Destinos_Categorias si hay categorías seleccionadas
         if (categorias && categorias.length > 0) {
-            const promises = categorias.map(async (idCategoria) => {
-                await connection.promise().query(
-                    'INSERT INTO Destinos_Categorias (id_destino, id_categoria) VALUES (?, ?)',
-                    [nuevoDestinoId, idCategoria]
-                );
-            });
-            await Promise.all(promises);
+            const values = categorias.map(idCategoria => [nuevoDestinoId, idCategoria]);
+            await connection.promise().query(
+                'INSERT INTO Destinos_Categorias (id_destino, id_categoria) VALUES ?',
+                [values]
+            );
         }
 
         return nuevoDestinoId; // Retorna el ID del destino insertado
@@ -116,15 +114,13 @@ const actualizarCategoriasDestino = async (idDestino, categorias) => {
         await connection.promise().query(deleteQuery, [idDestino]);
 
         // Insertar las nuevas categorías para este destino
-        const insertQuery = `
-            INSERT INTO Destinos_Categorias (id_destino, id_categoria)
-            VALUES ?
-        `;
-
-        // Preparar los valores para la inserción múltiple
-        const values = categorias.map(categoria => [idDestino, categoria]);
-
-        await connection.promise().query(insertQuery, [values]);
+        if (categorias && categorias.length > 0) {
+            const values = categorias.map(idCategoria => [idDestino, idCategoria]);
+            await connection.promise().query(
+                'INSERT INTO Destinos_Categorias (id_destino, id_categoria) VALUES ?',
+                [values]
+            );
+        }
     } catch (error) {
         console.error('Error al actualizar las categorías del destino:', error);
         throw error;
@@ -134,7 +130,7 @@ const actualizarCategoriasDestino = async (idDestino, categorias) => {
 module.exports = {
     crearDestino,
     obtenerDestinos,
-    obtenerDestinoPorId, 
+    obtenerDestinoPorId,
     eliminarDestino,
     actualizarCategoriasDestino,
     actualizarDestino,

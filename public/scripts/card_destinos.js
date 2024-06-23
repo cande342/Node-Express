@@ -55,13 +55,6 @@ document.addEventListener("DOMContentLoaded", function() {
         return card;
     }
 
-    // Función para cerrar el modal (si es necesario)
-    function closeModal(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.style.display = "none";
-        }
-    }
 
     // Función para eliminar un destino
     function eliminarDestino(id) {
