@@ -39,32 +39,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('destinoForm').addEventListener('submit', async (event) => {
         event.preventDefault();
+    
         const formData = new FormData(event.target);
         const name_destino = formData.get('name_destino');
         const province = parseInt(formData.get('province'));
         const descripcion = formData.get('descripcion');
-        const categorias = Array.from(selectedCategories); // Convertir el Set a un array de strings
+        const categorias = formData.getAll('categorias').map(id => parseInt(id));
+        const imagen_destino = formData.get('imagen_destino'); // Obtener el archivo
+    
+        // Convertir categorias a JSON antes de enviarlo
+        formData.set('categorias', JSON.stringify(categorias));
 
-        const data = { name_destino, province, descripcion, categorias };
-
-        console.log('Datos enviados (POST):', data);
-
-        const requestOptions = {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json' }
-        };
-
+        console.log('Datos enviados (POST):', {
+            name_destino,
+            province,
+            descripcion,
+            categorias,
+            imagen_destino
+        });
+    
         try {
-            const response = await fetch('/api/destinos', requestOptions);
+            const response = await fetch('/api/destinos', {
+                method: 'POST',
+                body: formData
+            });
+    
             if (!response.ok) {
                 throw new Error(`Error del servidor: ${response.statusText}`);
             }
+    
             const responseData = await response.json();
             console.log('Respuesta del servidor (POST):', responseData);
-            // Aquí podrías agregar lógica adicional después de crear el destino, si es necesario
+            alert(`Destino creado con ID: ${responseData.nuevoDestinoId}`);
+    
+            // Limpiar el formulario después de éxito
+            event.target.reset();
         } catch (error) {
             console.error('Error al enviar la solicitud (POST):', error);
+            alert('Hubo un error al crear el destino');
         }
     });
 });

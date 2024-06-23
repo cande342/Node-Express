@@ -2,14 +2,14 @@
 const connection = require('../db');
 
 // Método para crear un destino
-const crearDestino = async (name_destino, descripcion, id_provincia, categorias) => {
+const crearDestino = async (name_destino, descripcion, id_provincia, categorias, img_path) => {
     let nuevoDestinoId;
 
     try {
         // Insertar destino en la tabla Destinos
         const [resultsDestino, fieldsDestino] = await connection.promise().query(
-            'INSERT INTO Destinos (name_destino, descripcion, id_provincia) VALUES (?, ?, ?)',
-            [name_destino, descripcion, id_provincia]
+            'INSERT INTO Destinos (name_destino, descripcion, id_provincia, img_path) VALUES (?, ?, ?, ?)',
+            [name_destino, descripcion, id_provincia, img_path]
         );
 
         nuevoDestinoId = resultsDestino.insertId;
@@ -29,6 +29,7 @@ const crearDestino = async (name_destino, descripcion, id_provincia, categorias)
         throw error;
     }
 };
+
 
 // Método para obtener todos los destinos
 const obtenerDestinos = async () => {

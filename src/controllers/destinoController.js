@@ -12,16 +12,17 @@ const crearDestinoController = async (req, res) => {
     const { name_destino, descripcion, province, categorias } = req.body;
 
     try {
-        // Validar que todos los campos requeridos estén presentes y sean válidos
-        if (!name_destino || !descripcion || !province || !categorias || !Array.isArray(categorias)) {
-            return res.status(400).json({ message: 'Todos los campos son requeridos y deben estar en el formato correcto' });
-        }
-
         // Convertir el campo 'province' a número (si es necesario)
         const id_provincia = parseInt(province);
 
-        // Llamar al método para crear un destino en el modelo
-        const nuevoDestinoId = await crearDestino(name_destino, descripcion, id_provincia, categorias);
+        // Convertir categorias de JSON a array de enteros
+        const categoriasArray = JSON.parse(categorias).map(id => parseInt(id));
+        
+        // Obtener el nombre del archivo (multer ya guarda el archivo en 'req.file')
+        const img_path = req.file ? req.file.path : null;
+
+        // Llamar al método para crear un destino en el modelo, incluyendo la imagen
+        const nuevoDestinoId = await crearDestino(name_destino, descripcion, id_provincia, categoriasArray, img_path);
 
         // Enviar una respuesta de éxito
         res.status(201).json({ message: 'Destino creado exitosamente', nuevoDestinoId });

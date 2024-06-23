@@ -35,7 +35,7 @@
         <h1>Añadir un nuevo Destino</h1>
         <div class="columns">
             <div class="column-izq">
-                <form id="destinoForm">
+                <form id="destinoForm" enctype="multipart/form-data">
                     <label for="name_destino">Nombre del destino:</label>
                     <input type="text" id="name_destino" name="name_destino" required>
     
@@ -49,6 +49,10 @@
     
                     <label for="descripcion">Descripción:</label>
                     <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+    
+                    <!-- Campo para subir la imagen -->
+                    <label for="imagen_destino">Imagen:</label>
+                    <input type="file" id="imagen_destino" name="imagen_destino" accept="image/jpeg, image/jpg, image/png" required>
             </div>
             <div class="column-der">
                 <label for="categoria">Categorías:</label>
@@ -66,8 +70,6 @@
         <button type="submit">Crear</button>
         </form>
     </div>
-    
-
 
      <!-- Página que ven los usuarios -->
     <main>

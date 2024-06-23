@@ -1,10 +1,35 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const routes = require('./src/routes/index');
+const multer = require('multer');
 const db = require('./src/db');
 
-const app = express()
+const app = express();
+
+
+// Configuración de Multer para la subida de archivos
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+      cb(null, 'uploads/'); // Directorio donde se guardarán los archivos
+  },
+  filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+      cb(null, uniqueSuffix + path.extname(file.originalname)); // Nombre del archivo
+  }
+});
+
+// Filtro para aceptar solo ciertos tipos de archivos
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+      cb(null, true);
+  } else {
+      cb(null, false);
+  }
+};
+
+const upload = multer({ storage, fileFilter });
+
+
 
 // Middleware para manejar datos JSON
 app.use(express.json());
@@ -15,19 +40,37 @@ app.use(express.urlencoded({ extended: true }));
 // Ruta para archivos estáticos (HTML, CSS, imágenes, etc.)
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Importar controladores
+const { 
+  obtenerDestinosController, 
+  crearDestinoController, 
+  eliminarDestinoController, 
+  actualizarDestinoController 
+} = require('./src/controllers/destinoController');
 
-app.use(routes)
+// Ruta de inicio
+app.get('/', (req, res) => {
+  res.send('¡Bienvenido a mi aplicación Express!');
+});
 
+// Ruta para servir el HTML de destinos
+app.get('/destinos', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/destinos.html'));
+});
 
-/* En caso de no encontrar la ruta envia una pagina 404 */
-//Static Files
-app.use(express.static(path.join(__dirname,'./public')))
+// Rutas del CRUD de Destinos
+app.get('/api/destinos', obtenerDestinosController);
+app.post('/api/destinos', upload.single('imagen_destino'), crearDestinoController);
+app.delete('/api/destinos/:id', eliminarDestinoController);
+app.put('/api/destinos/:id', actualizarDestinoController);
 
-app.use((req, res)=>{
-  res.sendFile(path.join(__dirname,'./public/404.html'))
-})
-const PORT = process.env.PORT || 3001
+// Middleware para manejar rutas no encontradas
+app.use((req, res) => {
+  res.status(404).sendFile(path.join(__dirname, './public/404.html'));
+});
 
-app.listen(PORT, ()=> {
-  console.log('Servidor escuchando en el Puerto:' + PORT)
-})
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => {
+  console.log(`Servidor escuchando en el Puerto: ${PORT}`);
+});
