@@ -1,12 +1,19 @@
-// src/controllers/destinoController.js
-const { crearDestino, obtenerDestinos, eliminarDestino } = require('../models/destinoModel');
+const {
+    crearDestino,
+    obtenerDestinos,
+    eliminarDestino,
+    actualizarDestino,
+    actualizarCategoriasDestino,
+    obtenerDestinoPorId  // Importar esta función también
+} = require('../models/destinoModel');
 
+// METODO POST
 const crearDestinoController = async (req, res) => {
-    const { name_destino, description, province, categories } = req.body;
+    const { name_destino, descripcion, id_provincia, categorias } = req.body;
     
     try {
         // Llamar al método para crear un destino en el modelo
-        const nuevoDestinoId = await crearDestino(name_destino, description, province, categories);
+        const nuevoDestinoId = await crearDestino(name_destino, descripcion, id_provincia, categorias);
 
         // Enviar una respuesta de éxito
         res.status(201).json({ message: 'Destino creado exitosamente', nuevoDestinoId });
@@ -17,6 +24,7 @@ const crearDestinoController = async (req, res) => {
     }
 };
 
+// METODO GET
 const obtenerDestinosController = async (req, res) => {
     try {
         const destinos = await obtenerDestinos();
@@ -26,6 +34,7 @@ const obtenerDestinosController = async (req, res) => {
     }
 };
 
+// METODO DELETE
 const eliminarDestinoController = async (req, res) => {
     const { id } = req.params;
 
@@ -42,8 +51,38 @@ const eliminarDestinoController = async (req, res) => {
     }
 };
 
+// METODO PUT
+const actualizarDestinoController = async (req, res) => {
+    const { id } = req.params;
+    const { name_destino, descripcion, id_provincia, categorias } = req.body;
+
+    try {
+        // Verificar si el destino existe antes de actualizarlo
+        const destinoExistente = await obtenerDestinoPorId(id);
+        if (!destinoExistente) {
+            return res.status(404).json({ error: 'El destino no existe' });
+        }
+
+        // Actualizar el destino en la base de datos
+        await actualizarDestino(id, name_destino, descripcion, id_provincia);
+
+        // Actualizar las categorías del destino
+        await actualizarCategoriasDestino(id, categorias);
+
+        // Obtener el destino actualizado desde la base de datos
+        const destinoActualizado = await obtenerDestinoPorId(id);
+
+        // Retornar el destino actualizado como respuesta
+        res.json(destinoActualizado);
+    } catch (error) {
+        console.error('Error al actualizar el destino:', error);
+        res.status(500).json({ error: 'Error interno al actualizar el destino' });
+    }
+};
+
 module.exports = {
     crearDestinoController,
     obtenerDestinosController,
     eliminarDestinoController,
+    actualizarDestinoController,
 };

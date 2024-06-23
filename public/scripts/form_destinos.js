@@ -58,7 +58,7 @@ document.getElementById('destinoForm').addEventListener('submit', async (event) 
         headers: { 'Content-Type': 'application/json' }
     };
     try {
-        const response = await fetch('/destinos', requestOptions);
+        const response = await fetch('api/destinos', requestOptions);
         if (!response.ok) {
             const errorText = await response.text();
             throw new Error(`Error del servidor: ${errorText}`);

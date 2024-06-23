@@ -5,84 +5,62 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(response => response.json())
         .then(lugaresTuristicos => {
             lugaresTuristicos.forEach(lugar => {
-                const card = document.createElement('div');
-                card.classList.add('card');
-                card.setAttribute('data-id', lugar.id_destino);
-
-                const img = document.createElement('img');
-                img.src = 'ruta/a/la/imagen'; // Cambiar esto por la URL correcta si la tienes
-                img.alt = lugar.name_destino;
-
-                const title = document.createElement('h2');
-                title.textContent = lugar.name_destino;
-
-                const description = document.createElement('p');
-                description.textContent = lugar.descripcion;
-
-                const categories = document.createElement('p');
-                categories.textContent = `Categorías: ${lugar.categorias}`;
-
-                // Botón de eliminar
-                const deleteBtn = document.createElement('button');
-                deleteBtn.textContent = 'Eliminar';
-                deleteBtn.addEventListener('click', function() {
-                    eliminarDestino(lugar.id_destino);
-                });
-
-                // Agregar evento de clic a la tarjeta para abrir el modal
-                card.addEventListener('click', function() {
-                    openModal(lugar);
-                });
-
-                card.appendChild(img);
-                card.appendChild(title);
-                card.appendChild(description);
-                card.appendChild(categories);
-                card.appendChild(deleteBtn); 
-
+                const card = createCard(lugar);
                 cardContainer.appendChild(card);
             });
         })
         .catch(error => console.error('Error fetching data:', error));
 
-    // Función para cerrar el modal (mantenida como está)
-    function closeModal() {
-        const modal = document.getElementById('modal');
-        modal.style.display = "none";
-    }
+    // Función para crear una tarjeta (card)
+    function createCard(lugar) {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.setAttribute('data-id', lugar.id_destino);
 
-    // Función para abrir el modal (mantenida como está)
-    function openModal(lugar) {
-        const modal = document.getElementById('modal');
-        const modalContent = modal.querySelector('.modal-content');
-
-        modalContent.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = 'ruta/a/la/imagen'; // Reemplaza esto por la URL correcta si la tienes
+        img.alt = lugar.name_destino;
 
         const title = document.createElement('h2');
         title.textContent = lugar.name_destino;
 
-        const provincia = document.createElement('p');
-        provincia.textContent = `Provincia: ${lugar.nombre_provincia}`;
+        const description = document.createElement('p');
+        description.textContent = lugar.descripcion;
 
-        const descripcion = document.createElement('p');
-        descripcion.textContent = lugar.descripcion;
+        const categories = document.createElement('p');
+        categories.classList.add('card-categorias'); // Clase para categorías
+        categories.textContent = `Categorías: ${lugar.categorias}`;
 
-        const categorias = document.createElement('p');
-        categorias.textContent = `Categorías: ${lugar.categorias}`;
+        // Botón de Editar
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Editar';
+        editButton.addEventListener('click', function() {
+            ModalEdicion.open(lugar); // Abrir el modal de edición con los datos del lugar
+        });
 
-        modalContent.appendChild(title);
-        modalContent.appendChild(provincia);
-        modalContent.appendChild(descripcion);
-        modalContent.appendChild(categorias);
+        // Botón de Eliminar
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Eliminar';
+        deleteButton.addEventListener('click', function() {
+            eliminarDestino(lugar.id_destino); // Llamar a la función para eliminar el destino
+        });
 
-        const closeBtn = document.createElement('span');
-        closeBtn.classList.add('close');
-        closeBtn.innerHTML = '&times;';
-        modalContent.appendChild(closeBtn);
+        card.appendChild(img);
+        card.appendChild(title);
+        card.appendChild(description);
+        card.appendChild(categories);
+        card.appendChild(editButton);
+        card.appendChild(deleteButton);
 
-        modal.style.display = "block";
+        return card;
+    }
 
-        closeBtn.addEventListener('click', closeModal);
+    // Función para cerrar el modal (si es necesario)
+    function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.style.display = "none";
+        }
     }
 
     // Función para eliminar un destino
@@ -94,12 +72,11 @@ document.addEventListener("DOMContentLoaded", function() {
             if (response.ok) {
                 // Eliminar la tarjeta del DOM si la eliminación fue exitosa
                 document.querySelector(`.card[data-id="${id}"]`).remove();
-                closeModal(); // Cerrar el modal si se elimina correctamente
+                closeModal('modal'); // Cerrar el modal si se elimina correctamente
             } else {
                 alert('Error al eliminar el destino');
             }
         })
-        .catch(error => console.error('Error fetching data:', error));
+        .catch(error => console.error('Error al eliminar el destino:', error));
     }
-
 });

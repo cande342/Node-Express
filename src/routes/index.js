@@ -2,7 +2,10 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 
-const { crearDestinoController, obtenerDestinosController, eliminarDestinoController } = require('../controllers/destinoController');
+const { 
+  
+  crearDestinoController, obtenerDestinosController, 
+  eliminarDestinoController, actualizarDestinoController } = require('../controllers/destinoController');
 
 
 // Ruta de inicio
@@ -23,7 +26,8 @@ router.route('/api/destinos')
     .post(crearDestinoController);
 
 router.route('/api/destinos/:id')
-    .delete(eliminarDestinoController);
+    .delete(eliminarDestinoController)
+    .put(actualizarDestinoController);
 
 // Rutas de Servicios
 //router.use('/servicios', serviciosRoutes);

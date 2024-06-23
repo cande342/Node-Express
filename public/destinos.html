@@ -76,9 +76,9 @@
         <div class="column-der"> 
                 <label for="categoria">Categoría:</label>
                 <select id="categoria" name="categoria" multiple required>
-                    <option value="1">Montaña</option>
+                    <option value="1">Ciudad</option>
                     <option value="2">Playa</option>
-                    <option value="3">Ciudad</option>
+                    <option value="3">Montaña</option>
                     <option value="4">Selva</option>
                     <option value="5">Desierto</option>
                 </select>
@@ -159,10 +159,41 @@
                 <span class="close">&times;</span>
             </div>
         </div>
+
+    <!-- Modal para edición de destino -->
+    <div id="modalEdicion" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="ModalEdicion.close()">&times;</span>
+            <h2>Editar Destino</h2>
+            <form id="editForm">
+                <input type="hidden" id="editId" name="id">
+                <label for="editName">Nombre:</label>
+                <input type="text" id="editName" name="name_destino" required>
+                <label for="editDescripcion">Descripción:</label>
+                <textarea id="editDescripcion" name="descripcion" rows="4" required></textarea>
+                <label for="editProvincia">Provincia:</label>
+                <select id="editProvincia" name="id_provincia" required>
+                    <!-- Opciones de provincia cargadas dinámicamente -->
+                    <option value="1">Provincia 1</option>
+                    <option value="2">Provincia 2</option>
+                </select>
+                <label for="editCategorias">Categorías:</label>
+                <select id="editCategorias" name="categorias" multiple required>
+                    <!-- Opciones de categorías cargadas dinámicamente -->
+                    <option value="1">Categoría 1</option>
+                    <option value="2">Categoría 2</option>
+                </select>
+                <button type="button" id="saveButton">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+
         
     </main>
 
+    
     <script src="scripts/card_destinos.js"></script>
     <script src="scripts/form_destinos.js"></script>
+    <script src="scripts/edit_destinos.js"></script>
 </body>
 </html>
