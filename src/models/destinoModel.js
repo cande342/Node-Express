@@ -75,12 +75,25 @@ const obtenerDestinoPorId = async (id) => {
 // Método para eliminar un destino por su ID
 const eliminarDestino = async (id_destino) => {
     try {
+        // Obtener la ruta de la imagen antes de eliminar el destino
+        const [rows] = await connection.promise().query(
+            'SELECT img_path FROM Destinos WHERE id_destino = ?',
+            [id_destino]
+        );
+
+        if (rows.length === 0) {
+            return { success: false, imgPath: null }; // No se encontró el destino
+        }
+
+        const imgPath = rows[0].img_path;
+
+        // Eliminar el destino de la base de datos
         const [result] = await connection.promise().query(
             'DELETE FROM Destinos WHERE id_destino = ?',
             [id_destino]
         );
 
-        return result.affectedRows > 0; // Retorna true si se afectó alguna fila (es decir, si se eliminó algún registro)
+        return { success: result.affectedRows > 0, imgPath }; // Retorna true si se afectó alguna fila y la ruta de la imagen
     } catch (error) {
         console.error('Error al eliminar el destino en el modelo:', error);
         throw error;

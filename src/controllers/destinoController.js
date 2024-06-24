@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const {
     crearDestino,
     obtenerDestinos,
@@ -45,18 +47,30 @@ const obtenerDestinosController = async (req, res) => {
 
 // METODO DELETE
 const eliminarDestinoController = async (req, res) => {
-    const { id } = req.params;
+    const id_destino = req.params.id;
 
     try {
-        const resultado = await eliminarDestino(id);
-        if (resultado) {
-            res.status(200).json({ message: 'Destino eliminado correctamente' });
+        const { success, imgPath } = await eliminarDestino(id_destino);
+
+        if (success) {
+            // Eliminar la imagen del sistema de archivos
+            if (imgPath) {
+                const filePath = path.join(__dirname, '../../uploads', imgPath);
+                fs.unlink(filePath, (err) => {
+                    if (err) {
+                        console.error('Error al eliminar la imagen:', err);
+                    } else {
+                        console.log('Imagen eliminada:', filePath);
+                    }
+                });
+            }
+            res.status(200).json({ message: 'Destino eliminado exitosamente' });
         } else {
-            res.status(404).json({ error: 'Destino no encontrado' });
+            res.status(404).json({ message: 'Destino no encontrado' });
         }
     } catch (error) {
-        console.error('Error al eliminar el destino:', error);
-        res.status(500).json({ error: 'Error interno al eliminar el destino' });
+        console.error('Error al eliminar el destino en el servidor:', error);
+        res.status(500).json({ message: 'Hubo un error al eliminar el destino en el servidor' });
     }
 };
 
