@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="/styles/header.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar Sesión</title>
+</head>
+
+<body>
+    <header> 
+        <div class="navegador">
+            <div class="logo">
+                <a href="../index.html"> <img src="../images/logo-nav.png"/> </a>
+            </div>
+            <nav class="nav-items">
+                <ul>
+                    <li><a href="../index.html"><i class="fas fa-home" style="color: #161717;"></i> Inicio</a></li>
+                    <li><a href="destinos.html"><i class="fas fa-map-marker-alt" style="color: #161717;"></i> Destinos</a></li>
+                    <li><a href="servicios.html"><i class="fas fa-bell" style="color: #1c1c1c;"></i> Servicios</a></li>
+                    <li><a href="login.html"><i class="fas fa-user" style="color: #1c1c1c;"></i> Iniciar Sesión</a></li>
+                </ul>
+            </nav>
+            <i class="fas fa-bars" id="menu-toggle"></i>
+        </div>
+    </header>
+
+
+    <h2>Iniciar Sesión</h2>
+    <form id="loginForm" method="POST"> <!-- Cambiado a método POST -->
+      <div>
+        <label for="correo_electronico">Correo Electrónico:</label>
+        <input type="email" id="correo_electronico" name="correo_electronico" required>
+      </div>
+      <div>
+        <label for="contrasenia">Contraseña:</label>
+        <input type="password" id="contrasenia" name="contrasenia" required>
+      </div>
+      <button type="submit">Iniciar Sesión</button>
+    </form>
+
+  <script src="scripts/login.js"></script> 
+</body>
+</html>

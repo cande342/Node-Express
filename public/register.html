@@ -1,0 +1,44 @@
+<!-- public/register.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="/styles/header.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Usuario</title>
+</head>
+<body>
+    <header> 
+      <div class="navegador">
+          <div class="logo">
+              <a href="../index.html"> <img src="../images/logo-nav.png"/> </a>
+          </div>
+          <nav class="nav-items">
+              <ul>
+                  <li><a href="../index.html"><i class="fas fa-home" style="color: #161717;"></i> Inicio</a></li>
+                  <li><a href="destinos.html"><i class="fas fa-map-marker-alt" style="color: #161717;"></i> Destinos</a></li>
+                  <li><a href="servicios.html"><i class="fas fa-bell" style="color: #1c1c1c;"></i> Servicios</a></li>
+                  <li><a href="login.html"><i class="fas fa-user" style="color: #1c1c1c;"></i> Iniciar Sesión</a></li>
+              </ul>
+          </nav>
+          <i class="fas fa-bars" id="menu-toggle"></i>
+      </div>
+  </header>
+
+  <h1>Registro de Usuario</h1>
+  <form id="registerForm" method="POST" action="/auth/register">
+    <input type="text" name="nombre" placeholder="Nombre" required>
+    <input type="text" name="apellido" placeholder="Apellido" required>
+    <input type="date" name="fecha_nacimiento" placeholder="Fecha de Nacimiento" required>
+    <input type="text" name="domicilio_ciudad" placeholder="Ciudad" required>
+    <input type="text" name="domicilio_departamento" placeholder="Departamento" required>
+    <input type="text" name="telefono" placeholder="Teléfono" required>
+    <input type="email" name="correo_electronico" placeholder="Correo Electrónico" required>
+    <input type="password" name="contrasenia" placeholder="Contraseña" required>
+    <button type="submit">Registrar</button>
+  </form>
+
+
+  <script src="./scripts/register.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+/*Estilos del navegador*/
+
+body {
+    margin: 0;
+    padding: 0;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-family: "Poppins", sans-serif; 
+    background-color: #222831;
+}
+
+
+.navegador {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0; 
+    width: 100%;
+    z-index: 1000; 
+    background: rgb(0,173,181);
+    background: linear-gradient(149deg, rgba(0,173,181,1) 29%, rgba(170,227,226,1) 89%);
+
+}
+.navegador h1{
+    margin-left: 20px;
+}
+.nav-items ul {
+    display: flex;
+    list-style-type: none; 
+}
+.nav-items li {
+    margin-right: 50px; 
+}
+.nav-items a {
+    text-decoration: none; 
+    color: #454e59; 
+    font-weight: bold; 
+    position: relative; /* Añadido para alinear el icono con el texto */
+}
+.nav-items a i {
+    margin-right: 5px; /* Espacio entre el icono y el texto */
+}
+.nav-items a:hover,
+.nav-items a:hover i {
+    color: grey !important; 
+}
+#menu-toggle {
+    display: none;
+    cursor: pointer;
+}
+.logo img {
+    margin-top: 5px;
+    width: 200px;
+}
+

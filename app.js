@@ -3,6 +3,9 @@ const express = require('express');
 const path = require('path');
 const multer = require('multer');
 const db = require('./src/db');
+const authRoutes = require('./src/routes/authRoutes');
+const verificarToken = require('./src/middleware/middlewareAuth'); 
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const app = express();
 
@@ -55,6 +58,22 @@ app.get('/', (req, res) => {
 app.get('/destinos', (req, res) => {
   res.sendFile(path.join(__dirname, './public/destinos.html'));
 });
+
+// Ruta para servir el HTML de registro
+app.get('/register', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/register.html'));
+});
+
+// Ruta para servir el HTML de inicio de sesión
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/login.html'));
+});
+
+//Ruta a Auth
+app.use('/auth', authRoutes);
+
+//Verifica token en todas las rutas de api
+app.use('/api', verificarToken);
 
 // Rutas del CRUD de Destinos
 app.get('/api/destinos', obtenerDestinosController);
