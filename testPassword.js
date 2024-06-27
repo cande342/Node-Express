@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 
-const plainPassword = 'candela123';
+const plainPassword = 'admin';
 
 // Crear el hash
 bcrypt.hash(plainPassword, 10, (err, hash) => {

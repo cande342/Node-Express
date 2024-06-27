@@ -12,29 +12,35 @@ const {
 // METODO POST para crear un nuevo destino
 const crearDestinoController = async (req, res) => {
     const { name_destino, descripcion, province, categorias } = req.body;
-
+  
     try {
-        // Convertir el campo 'province' a número (si es necesario)
-        const id_provincia = parseInt(province);
-
-        // Convertir categorias de JSON a array de enteros
-        const categoriasArray = JSON.parse(categorias).map(id => parseInt(id));
-        
-        // Obtener el nombre del archivo (multer ya guarda el archivo en 'req.file')
-        const img_path = req.file ? req.file.filename : null;
-
-        // Llamar al método para crear un destino en el modelo, incluyendo la imagen
-        const nuevoDestinoId = await crearDestino(name_destino, descripcion, id_provincia, categoriasArray, img_path);
-
-        // Enviar una respuesta de éxito
-        res.status(201).json({ message: 'Destino creado exitosamente', nuevoDestinoId });
+      // Convertir el campo 'province' a número (si es necesario)
+      const id_provincia = parseInt(province);
+  
+      // Convertir categorias de JSON a array de enteros
+      const categoriasArray = JSON.parse(categorias).map(id => parseInt(id));
+      
+      // Obtener el nombre del archivo (multer ya guarda el archivo en 'req.file')
+      const img_path = req.file ? req.file.filename : null;
+  
+      // Verificar el rol del usuario
+      if (req.user.rol !== 1) { // Asumiendo que el rol 1 es el administrador con permisos
+        return res.status(403).json({ error: 'Acceso denegado, usuario no autorizado para crear destinos.' });
+      }
+  
+      // Llamar al método para crear un destino en el modelo, incluyendo la imagen
+      const nuevoDestinoId = await crearDestino(name_destino, descripcion, id_provincia, categoriasArray, img_path);
+  
+      // Enviar una respuesta de éxito
+      res.status(201).json({ message: 'Destino creado exitosamente', nuevoDestinoId });
     } catch (error) {
-        // Manejo de errores
-        console.error('Error al crear el destino:', error);
-        res.status(500).json({ message: 'Hubo un error al crear el destino en el servidor' });
+      // Manejo de errores
+      console.error('Error al crear el destino:', error);
+      res.status(500).json({ message: 'Hubo un error al crear el destino en el servidor' });
     }
-};
-
+  };
+  
+  module.exports = crearDestinoController;
 // METODO GET
 const obtenerDestinosController = async (req, res) => {
     try {

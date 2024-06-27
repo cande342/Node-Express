@@ -4,13 +4,13 @@ const path = require('path');
 const multer = require('multer');
 const db = require('./src/db');
 const authRoutes = require('./src/routes/authRoutes');
-const verificarToken = require('./src/middleware/middlewareAuth');
+
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const app = express();
 // Middleware para manejar datos JSON
 app.use(express.json());
-
+const verificarToken = require('./src/middleware/middlewareAuth');
 // Configuración de Multer para la subida de archivos
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {

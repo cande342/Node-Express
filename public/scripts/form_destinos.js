@@ -5,7 +5,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     categoriaSelect.addEventListener('change', updateSelectedCategories);
 
+    // Función para obtener el token almacenado en localStorage
+    function obtenerToken() {
+        const token = localStorage.getItem('token');
+        console.log('Token obtenido:', token);
+        return token;
+    }
+
     function updateSelectedCategories() {
+        const token = obtenerToken();
+        if (!token) {
+            console.error('No se encontró token en localStorage');
+            return;
+        }
+
         selectedCategoriesDiv.innerHTML = '';
 
         Array.from(categoriaSelect.selectedOptions).forEach(option => {
@@ -46,10 +59,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const descripcion = formData.get('descripcion');
         const categorias = formData.getAll('categorias').map(id => parseInt(id));
         const imagen_destino = formData.get('imagen_destino');
-    
+            
+        // Obtener el token dentro del evento submit
+        const token = obtenerToken();
+        if (!token) {
+            console.error('No se encontró token en localStorage');
+            return;
+        }
         // Convertir categorias a JSON antes de enviarlo
         formData.set('categorias', JSON.stringify(categorias));
-
+    
         console.log('Datos enviados (POST):', {
             name_destino,
             province,
@@ -61,6 +80,9 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await fetch('/api/destinos', {
                 method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
                 body: formData
             });
     

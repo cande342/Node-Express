@@ -1,15 +1,30 @@
 document.addEventListener("DOMContentLoaded", function() {
     const cardContainer = document.querySelector('.card-container');
 
-    fetch('/api/destinos')
-        .then(response => response.json())
-        .then(lugaresTuristicos => {
-            lugaresTuristicos.forEach(lugar => {
-                const card = createCard(lugar);
-                cardContainer.appendChild(card);
-            });
-        })
-        .catch(error => console.error('Error fetching data:', error));
+    // Función para obtener el token almacenado en localStorage
+    function obtenerToken() {
+        return localStorage.getItem('token');
+    }
+
+    // Función para cargar los destinos al cargar la página
+    function cargarDestinos() {
+        fetch('/api/destinos')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al obtener los destinos');
+                }
+                return response.json();
+            })
+            .then(lugaresTuristicos => {
+                lugaresTuristicos.forEach(lugar => {
+                    const card = createCard(lugar);
+                    cardContainer.appendChild(card);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    }
+
+    cargarDestinos(); // Cargar destinos al cargar la página
 
     // Función para crear una tarjeta (card)
     function createCard(lugar) {
@@ -17,7 +32,6 @@ document.addEventListener("DOMContentLoaded", function() {
         card.classList.add('card');
         card.setAttribute('data-id', lugar.id_destino);
 
-  
         const img = document.createElement('img');
         img.src = `http://localhost:3001/uploads/${lugar.img_path}`;
         img.alt = lugar.name_destino;
@@ -29,17 +43,15 @@ document.addEventListener("DOMContentLoaded", function() {
         description.textContent = lugar.descripcion;
 
         const categories = document.createElement('p');
-        categories.classList.add('card-categorias'); // Clase para categorías
+        categories.classList.add('card-categorias');
         categories.textContent = `Categorías: ${lugar.categorias}`;
 
-        // Botón de Editar
         const editButton = document.createElement('button');
         editButton.textContent = 'Editar';
         editButton.addEventListener('click', function() {
             ModalEdicion.open(lugar); // Abrir el modal de edición con los datos del lugar
         });
 
-        // Botón de Eliminar
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Eliminar';
         deleteButton.addEventListener('click', function() {
@@ -56,17 +68,24 @@ document.addEventListener("DOMContentLoaded", function() {
         return card;
     }
 
-
     // Función para eliminar un destino
     function eliminarDestino(id) {
+        const token = obtenerToken();
+        if (!token) {
+            console.error('No se encontró token en localStorage');
+            return;
+        }
+
         fetch(`/api/destinos/${id}`, {
             method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         })
         .then(response => {
             if (response.ok) {
-                // Eliminar la tarjeta del DOM si la eliminación fue exitosa
                 document.querySelector(`.card[data-id="${id}"]`).remove();
-                closeModal('modal'); // Cerrar el modal si se elimina correctamente
+                closeModal('modal');
             } else {
                 alert('Error al eliminar el destino');
             }

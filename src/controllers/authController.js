@@ -25,11 +25,9 @@ exports.register = async (req, res) => {
   }
 };
 
-//IICIO DE SESION
-exports.login = async (req, res) => {
+//INICIO DE SESION
+  exports.login = async (req, res) => {
   const { correo_electronico, password } = req.body;
-
-  console.log('Datos recibidos:', req.body); // Log para verificar los datos recibidos
 
   // Validar que todos los campos estén presentes
   if (!correo_electronico || !password) {
@@ -49,29 +47,27 @@ exports.login = async (req, res) => {
         return res.status(400).json({ error: 'Usuario no encontrado.' });
       }
 
-      // Log para verificar el usuario obtenido
-      console.log('Usuario encontrado:', user);
-
       // Verificar la contraseña
       const isPasswordValid = await bcrypt.compare(password, user.contrasena_hash);
-
-      console.log('Contraseña ingresada:', password);
-      console.log('Contraseña almacenada (hasheada):', user.contrasena_hash);
-      console.log('Resultado de comparación de contraseñas:', isPasswordValid);
 
       if (!isPasswordValid) {
         return res.status(400).json({ error: 'Contraseña incorrecta.' });
       }
 
-      // Crear token JWT
-      const token = jwt.sign({ id: user.id_usuario, correo_electronico: user.correo_electronico }, JWT_SECRET, { expiresIn: '1h' });
+      // Crear token JWT con el campo 'rol'
+      const token = jwt.sign(
+        { id: user.id_usuario, correo_electronico: user.correo_electronico, rol: user.rol },
+        JWT_SECRET,
+        { expiresIn: '1h' }
+      );
 
       res.status(200).json({
         message: 'Inicio de sesión exitoso',
         token,
         user: {
           id: user.id_usuario,
-          correo_electronico: user.correo_electronico
+          correo_electronico: user.correo_electronico,
+          rol: user.rol  // Asegurar que el rol también se devuelve en la respuesta
         }
       });
     });
