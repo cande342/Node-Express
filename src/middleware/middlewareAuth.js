@@ -23,8 +23,15 @@ const verificarToken = (req, res, next) => {
     // Continuar con el siguiente middleware o controlador
     next();
   } catch (err) {
-    // Capturar errores de verificación del token
-    res.status(401).json({ error: 'Token inválido.' });
+    // Capturar errores específicos de verificación del token
+    if (err.name === 'TokenExpiredError') {
+      return res.status(401).json({ error: 'Token expirado.' });
+    }
+    if (err.name === 'JsonWebTokenError') {
+      return res.status(401).json({ error: 'Token inválido.' });
+    }
+    // Otros errores de verificación del token
+    res.status(401).json({ error: 'Error al verificar el token.' });
   }
 };
 

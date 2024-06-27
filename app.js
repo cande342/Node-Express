@@ -8,6 +8,8 @@ const verificarToken = require('./src/middleware/middlewareAuth');
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const app = express();
+// Middleware para manejar datos JSON
+app.use(express.json());
 
 // Configuración de Multer para la subida de archivos
 const storage = multer.diskStorage({
@@ -31,8 +33,7 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({ storage, fileFilter });
 
-// Middleware para manejar datos JSON
-app.use(express.json());
+
 
 // Middleware para manejar datos codificados en URL (formularios HTML)
 app.use(express.urlencoded({ extended: true }));

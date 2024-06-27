@@ -24,11 +24,10 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
       // Manejar la respuesta del servidor correctamente
       // Por ejemplo, guardar el token en localStorage y redirigir a otra página
       localStorage.setItem('token', data.token);
-      window.location.href = '/dashboard'; // Redirigir a la página de dashboard o perfil, etc.
+      window.location.href = '/destinos'; 
     })
     .catch(error => {
       console.error('Error al iniciar sesión:', error);
-      // Mostrar mensaje de error al usuario o manejar el error de otra manera
-      alert('Error al iniciar sesión. Verifica tus credenciales e intenta nuevamente.');
+      alert('Error al iniciar sesión.');
     });
 });

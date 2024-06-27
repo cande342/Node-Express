@@ -3,68 +3,33 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const JWT_SECRET = process.env.JWT_SECRET;
 
-// Controlador para registrar un nuevo usuario
-exports.register = (req, res) => {
+exports.register = async (req, res) => {
   const { nombre, apellido, fecha_nacimiento, domicilio_ciudad, domicilio_departamento, telefono, correo_electronico, contrasena_hash } = req.body;
 
-  // Validar que todos los campos requeridos estén presentes
   if (!nombre || !apellido || !fecha_nacimiento || !domicilio_ciudad || !domicilio_departamento || !telefono || !correo_electronico || !contrasena_hash) {
-    return res.status(400).send({ message: 'Todos los campos son obligatorios' });
+    return res.status(400).json({ error: 'Todos los campos son obligatorios.' });
   }
 
-  // Verificar si ya existe un usuario con el correo electrónico proporcionado
-  User.findByEmail(correo_electronico, (err, user) => {
-    if (err) {
-      console.error('Error al buscar el correo electrónico:', err);
-      return res.status(500).send({ message: 'Error al buscar el correo electrónico' });
-    }
-
-    // Si el usuario ya existe, devolver un error
-    if (user) {
-      return res.status(400).send({ message: 'El correo electrónico ya está registrado' });
-    }
-
-    // Encriptar la contraseña antes de guardarla en la base de datos
-    bcrypt.hash(contrasena_hash, 10, (err, hashedPassword) => {
+  try {
+    // Crear el nuevo usuario
+    User.create({ nombre, apellido, fecha_nacimiento, domicilio_ciudad, domicilio_departamento, telefono, correo_electronico, contrasena_hash }, (err, newUser) => {
       if (err) {
-        console.error('Error al encriptar la contraseña:', err);
-        return res.status(500).send({ message: 'Error al encriptar la contraseña' });
+        console.error('Error al registrar el usuario:', err);
+        return res.status(500).json({ error: 'Error al registrar el usuario.' });
       }
-
-      // Datos del nuevo usuario a ser creado
-      const newUser = {
-        nombre,
-        apellido,
-        fecha_nacimiento,
-        domicilio_ciudad,
-        domicilio_departamento,
-        telefono,
-        correo_electronico,
-        contrasena_hash: hashedPassword, // Guardar la contraseña hasheada
-        rol: 0 //rol hardcodeadoo
-      };
-
-      // Crear el usuario en la base de datos
-      User.create(newUser, (err, createdUser) => {
-        if (err) {
-          console.error('Error al registrar el usuario:', err);
-          return res.status(500).send({ message: 'Error al registrar el usuario' });
-        }
-
-        // Generar un token JWT para autenticación
-        const token = jwt.sign({ id: createdUser.id_usuario, email: correo_electronico }, JWT_SECRET, { expiresIn: '1h' });
-
-        // Enviar el token como respuesta al cliente
-        return res.status(201).send({ token });
-      });
+      res.status(201).json({ message: 'Usuario registrado con éxito.', user: newUser });
     });
-  });
+  } catch (err) {
+    console.error('Error al registrar el usuario:', err);
+    res.status(500).json({ error: 'Error al registrar el usuario.' });
+  }
 };
 
-
-// Controlador para iniciar sesión
+//IICIO DE SESION
 exports.login = async (req, res) => {
   const { correo_electronico, password } = req.body;
+
+  console.log('Datos recibidos:', req.body); // Log para verificar los datos recibidos
 
   // Validar que todos los campos estén presentes
   if (!correo_electronico || !password) {
@@ -80,15 +45,19 @@ exports.login = async (req, res) => {
       }
 
       if (!user) {
+        console.log(`Usuario con correo electrónico ${correo_electronico} no encontrado.`);
         return res.status(400).json({ error: 'Usuario no encontrado.' });
       }
 
-      // Log para verificar los valores antes de comparar contraseñas
-      console.log('Contraseña ingresada:', password);
-      console.log('Contraseña almacenada (hasheada):', user.contrasena_hash);
+      // Log para verificar el usuario obtenido
+      console.log('Usuario encontrado:', user);
 
       // Verificar la contraseña
       const isPasswordValid = await bcrypt.compare(password, user.contrasena_hash);
+
+      console.log('Contraseña ingresada:', password);
+      console.log('Contraseña almacenada (hasheada):', user.contrasena_hash);
+      console.log('Resultado de comparación de contraseñas:', isPasswordValid);
 
       if (!isPasswordValid) {
         return res.status(400).json({ error: 'Contraseña incorrecta.' });

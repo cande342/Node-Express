@@ -12,6 +12,8 @@ User.create = (userData, callback) => {
     // Sobrescribir la contraseña en el objeto userData con el hash generado
     userData.contrasena_hash = hashedPassword;
 
+    console.log('Hash creado para el nuevo usuario:', hashedPassword); // Log para verificar el hash
+
     // Query para insertar el usuario con la contraseña hasheada
     const query = 'INSERT INTO usuario SET ?';
     db.query(query, userData, (err, res) => {
@@ -23,6 +25,7 @@ User.create = (userData, callback) => {
     });
   });
 };
+
 
 User.createLogin = (loginData, callback) => {
   const query = 'INSERT INTO login SET ?';
