@@ -26,6 +26,8 @@ const ModalEdicion = {
     },
 
     updateDestino: function() {
+        const token = obtenerToken(); // Obtener el token del localStorage
+
         const formData = new FormData(this.form);
 
         fetch(`/api/destinos/${formData.get('id')}`, {
@@ -37,7 +39,8 @@ const ModalEdicion = {
                 categorias: formData.getAll('categorias').map(Number)
             }),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Establecer el token en el encabezado
             }
         })
         .then(response => {
@@ -50,8 +53,10 @@ const ModalEdicion = {
         .then(data => {
             // Actualizar la tarjeta en el DOM si es necesario
             const updatedCard = document.querySelector(`.card[data-id="${formData.get('id')}"]`);
-            updatedCard.querySelector('h2').textContent = formData.get('name_destino');
-            updatedCard.querySelector('p').textContent = formData.get('descripcion');
+            if (updatedCard) {
+                updatedCard.querySelector('h2').textContent = formData.get('name_destino');
+                updatedCard.querySelector('p').textContent = formData.get('descripcion');
+            }
             this.close(); // Cerrar el modal después de actualizar
         })
         .catch(error => {
@@ -60,6 +65,12 @@ const ModalEdicion = {
         });
     }
 };
+
+    // Función para obtener el token almacenado en localStorage
+    function obtenerToken() {
+        const token = localStorage.getItem('token');
+        return token;
+    }
 
 // Event listener para el botón de guardar dentro del formulario de edición
 document.addEventListener("DOMContentLoaded", function() {

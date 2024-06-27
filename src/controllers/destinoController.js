@@ -80,7 +80,7 @@ const eliminarDestinoController = async (req, res) => {
     }
 };
 
-// METODO PUT
+// METODO PUT para actualizar un destino existente
 const actualizarDestinoController = async (req, res) => {
     const { id } = req.params;
     const { name_destino, descripcion, id_provincia, categorias } = req.body;
@@ -90,6 +90,13 @@ const actualizarDestinoController = async (req, res) => {
         const destinoExistente = await obtenerDestinoPorId(id);
         if (!destinoExistente) {
             return res.status(404).json({ error: 'El destino no existe' });
+        }
+
+        // Verificar el rol del usuario a través del token decodificado
+        const decodedToken = req.user; // Se asume que el middleware de verificación de token ya ha decodificado y asignado el usuario al objeto de solicitud req.user
+
+        if (!decodedToken || decodedToken.rol !== 1) {
+            return res.status(403).json({ error: 'Acceso denegado, usuario no autorizado para editar destinos' });
         }
 
         // Actualizar el destino en la base de datos
@@ -108,6 +115,8 @@ const actualizarDestinoController = async (req, res) => {
         res.status(500).json({ error: 'Error interno al actualizar el destino' });
     }
 };
+
+module.exports = actualizarDestinoController;
 
 module.exports = {
     crearDestinoController,
