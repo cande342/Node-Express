@@ -1,21 +1,31 @@
 const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.JWT_SECRET;
 
-function verificarToken(req, res, next) {
-  const token = req.headers['authorization'];
+const verificarToken = (req, res, next) => {
+  // Obtener el token de la cabecera Authorization
+  const token = req.header('Authorization');
 
-  if (!token) {
-    return res.status(403).json({ message: 'Token no proporcionado' });
+  // Verificar si el token está presente y tiene el formato adecuado
+  if (!token || !token.startsWith('Bearer ')) {
+    return res.status(401).json({ error: 'Acceso denegado, token requerido.' });
   }
 
-  jwt.verify(token, JWT_SECRET, (err, decoded) => {
-    if (err) {
-      console.error('Error al verificar el token:', err);
-      return res.status(401).json({ message: 'Token inválido' });
-    }
-    req.usuario = decoded; // Almacenar el usuario decodificado en el objeto de solicitud
+  // Extraer el token sin el prefijo 'Bearer '
+  const tokenSinBearer = token.replace('Bearer ', '');
+
+  try {
+    // Verificar y decodificar el token
+    const decoded = jwt.verify(tokenSinBearer, JWT_SECRET);
+
+    // Agregar el usuario decodificado al objeto de solicitud (req)
+    req.user = decoded;
+
+    // Continuar con el siguiente middleware o controlador
     next();
-  });
-}
+  } catch (err) {
+    // Capturar errores de verificación del token
+    res.status(401).json({ error: 'Token inválido.' });
+  }
+};
 
 module.exports = verificarToken;
-

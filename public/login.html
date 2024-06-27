@@ -25,19 +25,17 @@
         </div>
     </header>
 
-
-    <h2>Iniciar Sesión</h2>
-    <form id="loginForm" method="POST"> <!-- Cambiado a método POST -->
-      <div>
-        <label for="correo_electronico">Correo Electrónico:</label>
-        <input type="email" id="correo_electronico" name="correo_electronico" required>
-      </div>
-      <div>
-        <label for="contrasenia">Contraseña:</label>
-        <input type="password" id="contrasenia" name="contrasenia" required>
-      </div>
-      <button type="submit">Iniciar Sesión</button>
-    </form>
+    <div class="container">
+      <h2>Iniciar Sesión</h2>
+      <form id="loginForm" method="post"> <!-- Formulario con método POST -->
+        <input type="email" id="correo" name="correo_electronico" placeholder="Correo Electrónico" required>
+        <!-- Input para correo electrónico, el atributo 'name' debe coincidir con el utilizado en el controlador -->
+        <input type="password" id="password" name="password" placeholder="Contraseña" required>
+        <!-- Input para contraseña, el atributo 'name' debe coincidir con el utilizado en el controlador -->
+        <button type="submit">Iniciar Sesión</button>
+        <!-- Botón para enviar el formulario -->
+      </form>
+    </div>
 
   <script src="scripts/login.js"></script> 
 </body>

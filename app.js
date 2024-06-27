@@ -4,7 +4,7 @@ const path = require('path');
 const multer = require('multer');
 const db = require('./src/db');
 const authRoutes = require('./src/routes/authRoutes');
-const verificarToken = require('./src/middleware/middlewareAuth'); 
+const verificarToken = require('./src/middleware/middlewareAuth');
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const app = express();
@@ -39,7 +39,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware para servir archivos estáticos (HTML, CSS, imágenes, etc.)
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Importar controladores
 const {
@@ -69,17 +69,14 @@ app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, './public/login.html'));
 });
 
-//Ruta a Auth
+// Ruta a Auth
 app.use('/auth', authRoutes);
-
-//Verifica token en todas las rutas de api
-app.use('/api', verificarToken);
 
 // Rutas del CRUD de Destinos
 app.get('/api/destinos', obtenerDestinosController);
-app.post('/api/destinos', upload.single('imagen_destino'), crearDestinoController);
-app.delete('/api/destinos/:id', eliminarDestinoController);
-app.put('/api/destinos/:id', actualizarDestinoController);
+app.post('/api/destinos', verificarToken, upload.single('imagen_destino'), crearDestinoController);
+app.delete('/api/destinos/:id', verificarToken, eliminarDestinoController);
+app.put('/api/destinos/:id', verificarToken, actualizarDestinoController);
 
 // Middleware para manejar rutas no encontradas
 app.use((req, res) => {

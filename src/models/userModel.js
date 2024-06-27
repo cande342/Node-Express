@@ -1,42 +1,47 @@
-// userModel.js
 const db = require('../db');
 const bcrypt = require('bcryptjs');
 
 const User = {};
 
-User.create = (userData, result) => {
-  const query = 'INSERT INTO usuario SET ?';
-  db.query(query, userData, (err, res) => {
+User.create = (userData, callback) => {
+  // Generar el hash de la contraseña antes de insertarla
+  bcrypt.hash(userData.contrasena_hash, 10, (err, hashedPassword) => {
     if (err) {
-      result(err, null);
-      return;
+      return callback(err, null);
     }
-    // Obtener el id_usuario generado
-    const userId = res.insertId;
-    result(null, { id_usuario: userId, ...userData });
+    // Sobrescribir la contraseña en el objeto userData con el hash generado
+    userData.contrasena_hash = hashedPassword;
+
+    // Query para insertar el usuario con la contraseña hasheada
+    const query = 'INSERT INTO usuario SET ?';
+    db.query(query, userData, (err, res) => {
+      if (err) {
+        return callback(err, null);
+      }
+      const userId = res.insertId;
+      callback(null, { id_usuario: userId, ...userData });
+    });
   });
 };
 
-User.createLogin = (loginData, result) => {
+User.createLogin = (loginData, callback) => {
   const query = 'INSERT INTO login SET ?';
   db.query(query, loginData, (err, res) => {
     if (err) {
-      result(err, null);
-      return;
+      return callback(err, null);
     }
-    // No necesitas devolver el resultado del insert para el login
-    result(null, { ...loginData });
+    callback(null, { ...loginData });
   });
 };
 
-User.findByEmail = (email, result) => {
+User.findByEmail = (email, callback) => {
   const query = 'SELECT * FROM usuario WHERE correo_electronico = ?';
   db.query(query, [email], (err, res) => {
     if (err) {
-      result(err, null);
+      callback(err, null);
       return;
     }
-    result(null, res[0]);
+    callback(null, res[0]);
   });
 };
 
