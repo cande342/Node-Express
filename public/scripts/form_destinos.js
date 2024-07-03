@@ -13,13 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateSelectedCategories() {
-        const token = obtenerToken();
-        if (!token) {
-            console.error('No se encontró token en localStorage');
-            return;
-        }
-
         selectedCategoriesDiv.innerHTML = '';
+
+        // Limpiar el conjunto selectedCategories
+        selectedCategories.clear();
 
         Array.from(categoriaSelect.selectedOptions).forEach(option => {
             selectedCategories.add(option.value);
@@ -40,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (optionToRemove) {
                     optionToRemove.selected = false;
                     selectedCategories.delete(categoryValue);
-                    updateSelectedCategories();
+                    updateSelectedCategories(); // Actualizar la visualización de categorías seleccionadas
                 }
             });
 
@@ -52,14 +49,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('destinoForm').addEventListener('submit', async (event) => {
         event.preventDefault();
-    
+
         const formData = new FormData(event.target);
         const name_destino = formData.get('name_destino');
         const province = parseInt(formData.get('province'));
         const descripcion = formData.get('descripcion');
         const categorias = formData.getAll('categorias').map(id => parseInt(id));
         const imagen_destino = formData.get('imagen_destino');
-            
+
         // Obtener el token dentro del evento submit
         const token = obtenerToken();
         if (!token) {
@@ -68,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         // Convertir categorias a JSON antes de enviarlo
         formData.set('categorias', JSON.stringify(categorias));
-    
+
         console.log('Datos enviados (POST):', {
             name_destino,
             province,
@@ -76,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
             categorias,
             imagen_destino
         });
-    
+
         try {
             const response = await fetch('/api/destinos', {
                 method: 'POST',
@@ -85,15 +82,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: formData
             });
-    
+
             if (!response.ok) {
                 throw new Error(`Error del servidor: ${response.statusText}`);
             }
-    
+
             const responseData = await response.json();
             console.log('Respuesta del servidor (POST):', responseData);
             alert(`Destino creado con ID: ${responseData.nuevoDestinoId}`);
-    
+
             // Limpiar el formulario después de éxito
             event.target.reset();
         } catch (error) {
