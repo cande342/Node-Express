@@ -17,11 +17,11 @@
     <header> 
         <div class="navegador">
             <div class="logo">
-                <a href="../index.html"> <img src="../images/logo-nav.png"/> </a>
+                <a href="home.html"> <img src="images/logo-nav.png"/> </a>
             </div>
             <nav class="nav-items">
                 <ul>
-                    <li><a href="../index.html"><i class="fas fa-home" style="color: #161717;"></i> Inicio</a></li>
+                    <li><a href="home.html"><i class="fas fa-home" style="color: #161717;"></i> Inicio</a></li>
                     <li><a href="destinos.html"><i class="fas fa-map-marker-alt" style="color: #161717;"></i> Destinos</a></li>
                     <li><a href="servicios.html"><i class="fas fa-bell" style="color: #1c1c1c;"></i> Servicios</a></li>
                     <li><a href="login.html"><i class="fas fa-user" style="color: #1c1c1c;"></i> Iniciar Sesión</a></li>
@@ -44,8 +44,30 @@
                     <select id="province" name="province" required>
                         <option value="" disabled selected>Seleccione una provincia</option>
                         <option value="1">Buenos Aires</option>
-                        <option value="2">Catamarca</option>
-                        <!-- Otras opciones de provincias -->
+                        <option value="2">Mendoza</option>
+                        <option value="3">Córdoba</option>
+                        <option value="4">Santa Fe</option>
+                        <option value="5">Salta</option>
+                        <option value="6">Jujuy</option>
+                        <option value="7">Tucumán</option>
+                        <option value="8">Misiones</option>
+                        <option value="9">San Luis</option>
+                        <option value="10">San Juan</option>
+                        <option value="11">Neuquén</option>
+                        <option value="12">Río Negro</option>
+                        <option value="13">Chubut</option>
+                        <option value="14">Santa Cruz</option>
+                        <option value="15">Tierra del Fuego</option>
+                        <option value="16">La Rioja</option>
+                        <option value="17">Catamarca</option>
+                        <option value="18">Santiago del Estero</option>
+                        <option value="19">Corrientes</option>
+                        <option value="20">Entre Ríos</option>
+                        <option value="21">Formosa</option>
+                        <option value="22">Chaco</option>
+                        <option value="23">La Pampa</option>
+                        <option value="24">Santa Cruz</option>
+                        <option value="25">Tierra del Fuego</option>
                     </select>
     
                     <label for="descripcion">Descripción:</label>
@@ -62,16 +84,15 @@
                     <option value="4">Montañas</option>
                     <option value="5">Ciudades históricas</option>
                     <option value="6">Parques naturales</option>
-                    <option value="7">Deportes acuáticos</option>
-                    <option value="8">Senderismo</option>
-                    <option value="9">Esquí</option>
-                    <option value="10">Turismo cultural</option>
-                    <option value="11">Monumentos famosos</option>
-                    <option value="12">Sitios arqueológicos</option>
-                    <option value="13">Verano</option>
-                    <option value="14">Invierno</option>
-                    <option value="15">Otoño</option>
-                    <option value="16">Primavera</option>
+                    <option value="7">Senderismo</option>
+                    <option value="8">Esquí</option>
+                    <option value="9">Turismo cultura</option>
+                    <option value="10">Monumentos famosos</option>
+                    <option value="11">Sitios arqueológicos</option>
+                    <option value="12">Verano</option>
+                    <option value="13">Invierno</option>
+                    <option value="14">Otoño</option>
+                    <option value="15">Primavera</option>
                 </select>
     
                 <div class="selected-categories" id="selectedCategories">
@@ -98,24 +119,23 @@
                     </li>
                     <li>Actividades:
                         <ul>
-                            <li class="category-item" data-category-id="7">Deportes acuáticos</li>
-                            <li class="category-item" data-category-id="8">Senderismo</li>
-                            <li class="category-item" data-category-id="9">Esquí</li>
-                            <li class="category-item" data-category-id="10">Turismo cultural</li>
+                            <li class="category-item" data-category-id="7">Senderismo</li>
+                            <li class="category-item" data-category-id="8">Esquí</li>
+                            <li class="category-item" data-category-id="9">Turismo cultural</li>
                         </ul>
                     </li>
                     <li>Temporada:
                         <ul>
-                            <li class="category-item" data-category-id="13">Verano</li>
-                            <li class="category-item" data-category-id="14">Invierno</li>
-                            <li class="category-item" data-category-id="15">Otoño</li>
-                            <li class="category-item" data-category-id="16">Primavera</li>
+                            <li class="category-item" data-category-id="12">Verano</li>
+                            <li class="category-item" data-category-id="13">Invierno</li>
+                            <li class="category-item" data-category-id="14">Otoño</li>
+                            <li class="category-item" data-category-id="15">Primavera</li>
                         </ul>
                     </li>
                     <li>Atracciones turísticas:
                         <ul>
-                            <li class="category-item" data-category-id="11">Monumentos famosos</li>
-                            <li class="category-item" data-category-id="12">Sitios arqueológicos</li>
+                            <li class="category-item" data-category-id="10">Monumentos famosos</li>
+                            <li class="category-item" data-category-id="11">Sitios arqueológicos</li>
                         </ul>
                     </li>
                 </ul>
@@ -124,21 +144,19 @@
     
         <section class="filter-search">
             <select id="categorySelect">
-                <option value="0">Todas las categorías</option>
                 <option value="3">Playas</option>
                 <option value="4">Montañas</option>
                 <option value="5">Ciudades históricas</option>
                 <option value="6">Parques naturales</option>
-                <option value="7">Deportes acuáticos</option>
-                <option value="8">Senderismo</option>
-                <option value="9">Esquí</option>
-                <option value="10">Turismo cultural</option>
-                <option value="11">Monumentos famosos</option>
-                <option value="12">Sitios arqueológicos</option>
-                <option value="13">Verano</option>
-                <option value="14">Invierno</option>
-                <option value="15">Otoño</option>
-                <option value="16">Primavera</option>
+                <option value="7">Senderismo</option>
+                <option value="8">Esquí</option>
+                <option value="9">Turismo cultura</option>
+                <option value="10">Monumentos famosos</option>
+                <option value="11">Sitios arqueológicos</option>
+                <option value="12">Verano</option>
+                <option value="13">Invierno</option>
+                <option value="14">Otoño</option>
+                <option value="15">Primavera</option>
             </select>
         </section>
     
@@ -170,26 +188,47 @@
                     <textarea id="editDescripcion" name="descripcion" rows="4" required></textarea>
                     <label for="editProvincia">Provincia:</label>
                     <select id="editProvincia" name="id_provincia" required>
+                        <option value="1">Buenos Aires</option>
+                        <option value="2">Mendoza</option>
+                        <option value="3">Córdoba</option>
+                        <option value="4">Santa Fe</option>
+                        <option value="5">Salta</option>
+                        <option value="6">Jujuy</option>
+                        <option value="7">Tucumán</option>
+                        <option value="8">Misiones</option>
+                        <option value="9">San Luis</option>
+                        <option value="10">San Juan</option>
+                        <option value="11">Neuquén</option>
+                        <option value="12">Río Negro</option>
+                        <option value="13">Chubut</option>
+                        <option value="14">Santa Cruz</option>
+                        <option value="15">Tierra del Fuego</option>
+                        <option value="16">La Rioja</option>
+                        <option value="17">Catamarca</option>
+                        <option value="18">Santiago del Estero</option>
+                        <option value="19">Corrientes</option>
+                        <option value="20">Entre Ríos</option>
+                        <option value="21">Formosa</option>
+                        <option value="22">Chaco</option>
+                        <option value="23">La Pampa</option>
+                        <option value="24">Santa Cruz</option>
+                        <option value="25">Tierra del Fuego</option>
+                    </select>
+                    <label for="editCategorias">Categorías:</label>
+                    <select id="editCategorias" name="categorias" multiple required>
                         <option value="3">Playas</option>
                         <option value="4">Montañas</option>
                         <option value="5">Ciudades históricas</option>
                         <option value="6">Parques naturales</option>
-                        <option value="7">Deportes acuáticos</option>
-                        <option value="8">Senderismo</option>
-                        <option value="9">Esquí</option>
-                        <option value="10">Turismo cultural</option>
-                        <option value="11">Monumentos famosos</option>
-                        <option value="12">Sitios arqueológicos</option>
-                        <option value="13">Verano</option>
-                        <option value="14">Invierno</option>
-                        <option value="15">Otoño</option>
-                        <option value="16">Primavera</option>
-                    </select>
-                    <label for="editCategorias">Categorías:</label>
-                    <select id="editCategorias" name="categorias" multiple required>
-                        <!-- Opciones de categorías cargadas dinámicamente -->
-                        <option value="1">Categoría 1</option>
-                        <option value="2">Categoría 2</option>
+                        <option value="7">Senderismo</option>
+                        <option value="8">Esquí</option>
+                        <option value="9">Turismo cultura</option>
+                        <option value="10">Monumentos famosos</option>
+                        <option value="11">Sitios arqueológicos</option>
+                        <option value="12">Verano</option>
+                        <option value="13">Invierno</option>
+                        <option value="14">Otoño</option>
+                        <option value="15">Primavera</option>
                     </select>
                     <button type="button" id="saveButton">Guardar Cambios</button>
                 </form>

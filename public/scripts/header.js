@@ -6,10 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const loginButton = document.querySelector('nav.nav-items ul li:last-child a');
         if (loginButton) {
             loginButton.textContent = 'Cerrar Sesión';
-            loginButton.href = '#'; // Aquí deberías definir la acción de cerrar sesión
+            loginButton.href = '#'; 
             loginButton.addEventListener('click', function() {
                 localStorage.removeItem('token');
-                window.location.href = '/'; 
+                window.location.href = '/home'; 
             });
         }
     } else {

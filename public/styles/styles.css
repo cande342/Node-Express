@@ -81,7 +81,7 @@ main{
 .btn-container {
     display: flex; /* Mostrar los botones en línea */
     align-items: center; /* Alinear verticalmente al centro */
-    margin-bottom: 10px;
+    margin-top: 10px;
 }
 .small-btn {
     font-size: 12px; 

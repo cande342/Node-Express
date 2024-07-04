@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios</title>
+    <link rel="stylesheet" type="text/css" href="/styles/servicios.css">
+    <link rel="stylesheet" type="text/css" href="/styles/header.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Reddit+Mono:wght@200..900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/95fbe8c037.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="navegador">
+        <div class="logo">
+            <a href="home.html"> <img src="images/logo-nav.png"/> </a>
+        </div>
+        <nav class="nav-items">
+            <ul>
+                <li><a href="home.html"><i class="fas fa-home" style="color: #161717;"></i> Inicio</a></li>
+                <li><a href="destinos.html"><i class="fas fa-map-marker-alt" style="color: #161717;"></i> Destinos</a></li>
+                <li><a href="servicios.html"><i class="fas fa-bell" style="color: #1c1c1c;"></i> Servicios</a></li>
+                <li><a href="login.html"><i class="fas fa-user" style="color: #1c1c1c;"></i> Iniciar Sesión</a></li>
+            </ul>
+        </nav>
+        <i class="fas fa-bars" id="menu-toggle"></i>
+    </div>
+
+    <section class="service-content">
+    <div class="title">
+        <h1> ¡Elije lo que buscas! </h1>
+    </div>
+            
+    <article class="services" >
+        
+        <div class="service-card" id="hotel" >
+            <a href="#hoteles" >
+            </a>
+        </div>
+    
+        <div class="service-card" id="colectivo">
+            <a href="#colectivos" >
+            </a>
+        </div>
+
+        <div class="service-card" id="vuelos" >
+            <a href="#avion" >
+            </a>
+        </div>
+    </article>
+    </section>
+    
+
+    <!-- Sección de Alojamiento -->
+    <section class="acomodation-content" id="hoteles" >
+        
+        <div class="destination-container" >
+            <div class="destination-select">
+                <label for="destination">Destino ideal:</label>
+                <input type="text" id="destination-input" placeholder="Bariloche">
+            </div>            
+        </div>
+
+        <div class="accommodation-select">
+            <label for="accommodation-type">Tipo de alojamiento</label>
+            <div class="accommodation-buttons">
+                <button type="button" class="accommodation-button">Hotel</button>
+                <button type="button" class="accommodation-button">Pensión</button>
+                <button type="button" class="accommodation-button">Cabañas</button>
+                <button type="button" class="accommodation-button">Casa/Departamento</button>
+            </div>
+        </div>    
+
+        <div class="carousel-container">
+            <button class="prev"><i class="fas fa-chevron-left"></i></button>
+            <div class="carousel">
+                <div class="carousel-slide">
+                    <img src="images/servicios/1.png"Image 1">
+                </div>
+                <div class="carousel-slide">
+                    <img src="images/servicios/2.png" alt="Image 2">
+                </div>
+                <div class="carousel-slide">
+                    <img src="images/servicios/3.png" alt="Image 3">
+                </div>
+                <div class="carousel-slide">
+                    <img src="images/servicios/4.png" alt="Image 4">
+                </div>
+            </div>
+            <button class="next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </section>
+
+    <!-- Sección de Colectivos -->
+    <section class="buses-content" id="colectivos">
+        <div class="title-bus">
+            <h2>Reservá ahora tus pasajes en colectivo</h2>
+        </div>
+        <div class="bus-content">
+            <div class="bus-form">
+                <form>
+                    <label for="departure">Salida desde:</label>
+                    <input type="text" id="departure" name="departure">
+                    <label for="destination">Llegada en:</label>
+                    <input type="text" id="destination" name="destination">
+                    <label for="departure-date">Fecha de salida:</label>
+                    <input type="date" id="departure-date" name="departure-date">
+                    <label for="return-date">Fecha de llegada:</label>
+                    <input type="date" id="return-date" name="return-date">
+                    <button type="submit">Buscar</button>
+                </form>
+            </div>
+            <div class="imagenRuta">
+                <img src="images/servicios/rutas.png">
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Vuelos -->
+    <section class="flights-content" id="avion">
+        <div class="title-flights"> 
+            <h2>¡Descubrí vuelos!</h2>
+        </div>
+
+
+                <div class="fligth-form">
+                        <form>
+                            <label for="departure">Origen:</label>
+                            <input type="text" id="departure" name="departure">
+                            <label for="destination">Destino:</label>
+                            <input type="text" id="destination" name="destination">
+                            <label for="departure-date">Fecha estimada de salida:</label>
+                            <input type="date" id="departure-date" name="departure-date">
+                            <label for="return-date">Fecha estimada de regreso:</label>
+                            <input type="date" id="return-date" name="return-date">
+                            <button type="submit">Buscar</button>
+                        </form>
+
+            </div>
+    </section>
+
+    <script src="../Scripts/scripts.js"></script>
+</body>
+</html>

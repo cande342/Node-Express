@@ -50,8 +50,8 @@ const {
 } = require('./src/controllers/destinoController');
 
 // Ruta de inicio
-app.get('/', (req, res) => {
-  res.send('¡Bienvenido a mi aplicación Express!');
+app.get('/home', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/home.html'));
 });
 
 // Ruta para servir el HTML de destinos
@@ -68,7 +68,10 @@ app.get('/register', (req, res) => {
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, './public/login.html'));
 });
-
+// Ruta para Servicios
+app.get('/home', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/servicios.html'));
+});
 // Ruta a Auth
 app.use('/auth', authRoutes);
 

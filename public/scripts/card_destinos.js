@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
     const cardContainer = document.querySelector('.card-container');
+    const modal = document.getElementById('modal');
+    const modalTitle = modal.querySelector('h2');
+    const modalContent = modal.querySelector('.modal-content');
 
     // Función para obtener el token almacenado en localStorage
     function obtenerToken() {
@@ -26,100 +29,93 @@ document.addEventListener("DOMContentLoaded", function() {
 
     cargarDestinos(); // Cargar destinos al cargar la página
 
-// Función para crear una tarjeta (card)
-function createCard(lugar) {
-    const card = document.createElement('div');
-    card.classList.add('card');
-    card.setAttribute('data-id', lugar.id_destino);
+    // Función para crear una tarjeta (card)
+    function createCard(lugar) {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.setAttribute('data-id', lugar.id_destino);
 
-    const img = document.createElement('img');
-    img.src = `http://localhost:3001/uploads/${lugar.img_path}`;
-    img.alt = lugar.name_destino;
+        const img = document.createElement('img');
+        img.src = `http://localhost:3001/uploads/${lugar.img_path}`;
+        img.alt = lugar.name_destino;
 
-    const title = document.createElement('h2');
-    title.textContent = lugar.name_destino;
+        const title = document.createElement('h2');
+        title.textContent = lugar.name_destino;
 
-    const categories = document.createElement('p');
-    categories.classList.add('card-categorias');
-    categories.textContent = `Categorías: ${lugar.categorias}`;
+        const categories = document.createElement('p');
+        categories.classList.add('card-categorias');
+        categories.textContent = `Categorías: ${lugar.categorias}`;
 
-    // Verificar si el usuario está logeado para mostrar los botones de editar y eliminar
-    const token = obtenerToken();
-    if (token) {
-        const editButton = document.createElement('button');
-        editButton.textContent = 'Editar';
-        editButton.classList.add('small-btn'); // Agregar la clase small-btn
-        editButton.addEventListener('click', function() {
-            ModalEdicion.open(lugar); // Abrir el modal de edición con los datos del lugar
+        // Botón para ver más
+        const moreButton = document.createElement('button');
+        moreButton.textContent = 'Ver más';
+        moreButton.addEventListener('click', function() {
+            showModal(lugar.name_destino, lugar.descripcion); // Mostrar modal con nombre y descripción
         });
-    
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Eliminar';
-        deleteButton.classList.add('small-btn'); // Agregar la clase small-btn
-        deleteButton.addEventListener('click', function() {
-            eliminarDestino(lugar.id_destino); // Llamar a la función para eliminar el destino
-        });
-    
-        // Añadir los botones uno al lado del otro
-        const btnContainer = document.createElement('div');
-        btnContainer.classList.add('btn-container'); // Opcional, para contener los botones
-        btnContainer.appendChild(editButton);
-        btnContainer.appendChild(deleteButton);
-        card.appendChild(btnContainer); // Añadir el contenedor de botones a la tarjeta
+
+        card.appendChild(img);
+        card.appendChild(title);
+        card.appendChild(categories);
+        card.appendChild(moreButton);
+
+        // Verificar si el usuario está logeado para mostrar los botones de editar y eliminar
+        const token = obtenerToken();
+        if (token) {
+            const editButton = document.createElement('button');
+            editButton.textContent = 'Editar';
+            editButton.classList.add('small-btn');
+            editButton.addEventListener('click', function() {
+                ModalEdicion.open(lugar); // Abrir el modal de edición con los datos del lugar
+            });
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Eliminar';
+            deleteButton.classList.add('small-btn');
+            deleteButton.addEventListener('click', function() {
+                eliminarDestino(lugar.id_destino); // Llamar a la función para eliminar el destino
+            });
+
+            const btnContainer = document.createElement('div');
+            btnContainer.classList.add('btn-container');
+            btnContainer.appendChild(editButton);
+            btnContainer.appendChild(deleteButton);
+            card.appendChild(btnContainer);
+        }
+
+        return card;
     }
-
-    card.appendChild(img);
-    card.appendChild(title);
-    card.appendChild(categories);
-
-    // Botón para ver más (si el usuario no está logeado)
-    const moreButton = document.createElement('button');
-    moreButton.textContent = 'Ver más';
-    moreButton.addEventListener('click', function() {
-        showModal(lugar.name_destino, lugar.descripcion); // Mostrar modal con nombre y descripción
-    });
-
-    // Añadir el botón "Ver más" debajo de las categorías
-    card.appendChild(categories);
-    card.appendChild(moreButton);
-
-    return card;
-}
 
     // Función para mostrar el modal con nombre y descripción
     function showModal(name, description) {
-        const modal = document.getElementById('modal');
-        const modalTitle = modal.querySelector('h2');
-        const modalDescription = document.createElement('p');
+        closeModal(); // Cerrar el modal actual antes de abrir uno nuevo
 
         modalTitle.textContent = name;
+        const modalDescription = document.createElement('p');
         modalDescription.textContent = description;
 
         const closeModalButton = document.createElement('span');
         closeModalButton.classList.add('close');
         closeModalButton.textContent = '×';
         closeModalButton.addEventListener('click', () => {
-            closeModal('modal');
+            closeModal();
         });
 
-        modal.querySelector('.modal-content').innerHTML = '';
-        modal.querySelector('.modal-content').appendChild(closeModalButton);
-        modal.querySelector('.modal-content').appendChild(modalDescription);
+        modalContent.innerHTML = '';
+        modalContent.appendChild(closeModalButton);
+        modalContent.appendChild(modalDescription);
 
         modal.style.display = 'block';
     }
 
     // Función para cerrar el modal
-    function closeModal(modalId) {
-        const modal = document.getElementById(modalId);
+    function closeModal() {
         modal.style.display = 'none';
     }
 
     // Evento para cerrar el modal al hacer clic fuera de él
     window.addEventListener('click', function(event) {
-        const modal = document.getElementById('modal');
         if (event.target === modal) {
-            closeModal('modal');
+            closeModal();
         }
     });
 
@@ -140,7 +136,7 @@ function createCard(lugar) {
         .then(response => {
             if (response.ok) {
                 document.querySelector(`.card[data-id="${id}"]`).remove();
-                closeModal('modal');
+                closeModal();
             } else {
                 alert('Error al eliminar el destino');
             }

@@ -1,0 +1,115 @@
+.container {
+    width: 300px; /* Ancho del contenedor */
+    margin: auto; /* Centrado horizontal */
+    margin-top: 100px;
+    text-align: center; /* Alineación de texto centrada */
+    background-color: #f2f2f2; /* Color de fondo */
+    padding: 20px; /* Espacio interno */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+  }
+  
+  .container h2 {
+    color: #333; /* Color del título */
+    margin-bottom: 20px; /* Espacio inferior */
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  form label {
+    display: none; 
+  }
+  
+  form input[type="email"],
+  form input[type="password"] {
+    width: 90%; /* Ancho completo */
+    padding: 12px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de fuente */
+    border: 1px solid #ddd; /* Borde */
+    border-radius: 4px; /* Bordes redondeados */
+  }
+  
+  form button {
+    width: 100%; /* Ancho completo */
+    padding: 12px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de fuente */
+    background-color: #AC7DD2; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor al pasar */
+    transition: background-color 0.3s; /* Transición suave de color de fondo */
+  }
+  
+  form button:hover {
+    background-color: #8f5ca4; /* Color de fondo al pasar */
+  }
+
+
+ /* ESTILOS P EL REGISTRO */
+
+
+.register-form {
+    width: 500px; /* Ancho del formulario */
+    margin: auto; /* Centrado horizontal */
+    text-align: center; /* Alineación de texto centrada */
+    background-color: #f2f2f2; /* Color de fondo */
+    padding: 20px; /* Espacio interno */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+    margin-top: 100px;
+    margin-bottom: 20px;
+  }
+  
+  .register-form h1 {
+    color: #333; /* Color del título */
+    margin-bottom: 20px; /* Espacio inferior */
+  }
+  
+  .register-form label {
+    display: block; /* Mostrar etiquetas como bloque */
+    margin-bottom: 8px; /* Espacio inferior */
+  }
+  
+  .register-form input[type="text"],
+  .register-form input[type="date"],
+  .register-form input[type="email"],
+  .register-form input[type="password"] {
+    width: 90%; /* Ancho completo */
+    padding: 12px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de fuente */
+    border: 1px solid #ddd; /* Borde */
+    border-radius: 4px; /* Bordes redondeados */
+    margin-bottom: 12px; /* Espacio inferior */
+  }
+  
+  .register-form button {
+    width: 100%; /* Ancho completo */
+    padding: 12px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de fuente */
+    background-color: #AC7DD2; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor al pasar */
+    transition: background-color 0.3s; /* Transición suave de color de fondo */
+  }
+  
+  .register-form button:hover {
+    background-color: #8f5ca4; /* Color de fondo al pasar */
+  }
+  
+  
+  @media (max-width: 400px) {
+    .container {
+      width: 90%; 
+    }
+    .register-container {
+        width: 90%; /* Ancho del contenedor para pantallas pequeñas */
+      }
+  }
+  
