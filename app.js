@@ -33,8 +33,6 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({ storage, fileFilter });
 
-
-
 // Middleware para manejar datos codificados en URL (formularios HTML)
 app.use(express.urlencoded({ extended: true }));
 
@@ -47,7 +45,8 @@ const {
   obtenerDestinosController,
   crearDestinoController,
   eliminarDestinoController,
-  actualizarDestinoController
+  actualizarDestinoController,
+  obtenerDestinosPorCategoriaController,
 } = require('./src/controllers/destinoController');
 
 // Ruta de inicio
@@ -78,6 +77,9 @@ app.get('/api/destinos', obtenerDestinosController);
 app.post('/api/destinos', verificarToken, upload.single('imagen_destino'), crearDestinoController);
 app.delete('/api/destinos/:id', verificarToken, eliminarDestinoController);
 app.put('/api/destinos/:id', verificarToken, actualizarDestinoController);
+
+// Nueva ruta para filtrar destinos por categoría
+app.get('/api/destinos/categoria/:id', obtenerDestinosPorCategoriaController);
 
 // Middleware para manejar rutas no encontradas
 app.use((req, res) => {

@@ -7,6 +7,7 @@ const {
     actualizarDestino,
     actualizarCategoriasDestino,
     obtenerDestinoPorId,
+    obtenerDestinosPorCategoria,
 } = require('../models/destinoModel');
 
 // METODO POST para crear un nuevo destino
@@ -116,11 +117,21 @@ const actualizarDestinoController = async (req, res) => {
     }
 };
 
-module.exports = actualizarDestinoController;
 
+const obtenerDestinosPorCategoriaController = async (req, res) => {
+    const categoriaId = parseInt(req.params.id);
+    try {
+        const destinos = await obtenerDestinosPorCategoria(categoriaId);
+        res.json(destinos);
+    } catch (error) {
+        console.error('Error al obtener destinos por categoría:', error);
+        res.status(500).send('Error al obtener destinos por categoría');
+    }
+};
 module.exports = {
     crearDestinoController,
     obtenerDestinosController,
     eliminarDestinoController,
     actualizarDestinoController,
+    obtenerDestinosPorCategoriaController
 };

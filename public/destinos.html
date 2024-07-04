@@ -83,48 +83,48 @@
         </form>
     </div>
 
-     <!-- Página que ven los usuarios -->
     <main>
-         <aside>
+        <aside>
             <div class="filter-content">
                 <h2 class="filter-heading">Explora por Categoría</h2>
                 <ul>
                     <li>Tipo de destino:
                         <ul>
-                            <li class="category-item">Playas</li>
-                            <li class="category-item">Montañas</li>
-                            <li class="category-item">Ciudades históricas</li>
-                            <li class="category-item">Parques naturales</li>
+                            <li class="category-item" data-category-id="3">Playas</li>
+                            <li class="category-item" data-category-id="4">Montañas</li>
+                            <li class="category-item" data-category-id="5">Ciudades históricas</li>
+                            <li class="category-item" data-category-id="6">Parques naturales</li>
                         </ul>
                     </li>
                     <li>Actividades:
                         <ul>
-                            <li class="category-item">Deportes acuáticos</li>
-                            <li class="category-item">Senderismo</li>
-                            <li class="category-item">Esquí</li>
-                            <li class="category-item">Turismo cultural</li>
+                            <li class="category-item" data-category-id="7">Deportes acuáticos</li>
+                            <li class="category-item" data-category-id="8">Senderismo</li>
+                            <li class="category-item" data-category-id="9">Esquí</li>
+                            <li class="category-item" data-category-id="10">Turismo cultural</li>
                         </ul>
                     </li>
                     <li>Temporada:
                         <ul>
-                            <li class="category-item">Verano</li>
-                            <li class="category-item">Invierno</li>
-                            <li class="category-item">Otoño</li>
-                            <li class="category-item">Primavera</li>
+                            <li class="category-item" data-category-id="13">Verano</li>
+                            <li class="category-item" data-category-id="14">Invierno</li>
+                            <li class="category-item" data-category-id="15">Otoño</li>
+                            <li class="category-item" data-category-id="16">Primavera</li>
                         </ul>
                     </li>
                     <li>Atracciones turísticas:
                         <ul>
-                            <li class="category-item">Monumentos famosos</li>
-                            <li class="category-item">Sitios arqueológicos</li>
+                            <li class="category-item" data-category-id="11">Monumentos famosos</li>
+                            <li class="category-item" data-category-id="12">Sitios arqueológicos</li>
                         </ul>
                     </li>
                 </ul>
             </div>
         </aside>
-         
+    
         <section class="filter-search">
             <select id="categorySelect">
+                <option value="0">Todas las categorías</option>
                 <option value="3">Playas</option>
                 <option value="4">Montañas</option>
                 <option value="5">Ciudades históricas</option>
@@ -141,69 +141,66 @@
                 <option value="16">Primavera</option>
             </select>
         </section>
-        
-
+    
         <div class="main-content">
             <section class="img-galeria">
                 <div class="card-container">
-                    <!-- Acá las tarjetas desde JavaScript -->
+                    <!-- cards de destino -->
                 </div>
             </section>
         </div>
-        
-
+    
         <div id="modal" class="modal">
             <div class="modal-content">
-
                 <h2>Título del Lugar</h2>
                 <span class="close">&times;</span>
             </div>
         </div>
-
-    <!-- Modal para edición de destino -->
-    <div id="modalEdicion" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="ModalEdicion.close()">&times;</span>
-            <h2>Editar Destino</h2>
-            <form id="editForm">
-                <input type="hidden" id="editId" name="id">
-                <label for="editName">Nombre:</label>
-                <input type="text" id="editName" name="name_destino" required>
-                <label for="editDescripcion">Descripción:</label>
-                <textarea id="editDescripcion" name="descripcion" rows="4" required></textarea>
-                <label for="editProvincia">Provincia:</label>
-                <select id="editProvincia" name="id_provincia" required>
-                    <option value="3">Playas</option>
-                    <option value="4">Montañas</option>
-                    <option value="5">Ciudades históricas</option>
-                    <option value="6">Parques naturales</option>
-                    <option value="7">Deportes acuáticos</option>
-                    <option value="8">Senderismo</option>
-                    <option value="9">Esquí</option>
-                    <option value="10">Turismo cultural</option>
-                    <option value="11">Monumentos famosos</option>
-                    <option value="12">Sitios arqueológicos</option>
-                    <option value="13">Verano</option>
-                    <option value="14">Invierno</option>
-                    <option value="15">Otoño</option>
-                    <option value="16">Primavera</option>
-                </select>
-                <label for="editCategorias">Categorías:</label>
-                <select id="editCategorias" name="categorias" multiple required>
-                    <!-- Opciones de categorías cargadas dinámicamente -->
-                    <option value="1">Categoría 1</option>
-                    <option value="2">Categoría 2</option>
-                </select>
-                <button type="button" id="saveButton">Guardar Cambios</button>
-            </form>
+    
+        <!-- Modal para edición de destino -->
+        <div id="modalEdicion" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="ModalEdicion.close()">&times;</span>
+                <h2>Editar Destino</h2>
+                <form id="editForm">
+                    <input type="hidden" id="editId" name="id">
+                    <label for="editName">Nombre:</label>
+                    <input type="text" id="editName" name="name_destino" required>
+                    <label for="editDescripcion">Descripción:</label>
+                    <textarea id="editDescripcion" name="descripcion" rows="4" required></textarea>
+                    <label for="editProvincia">Provincia:</label>
+                    <select id="editProvincia" name="id_provincia" required>
+                        <option value="3">Playas</option>
+                        <option value="4">Montañas</option>
+                        <option value="5">Ciudades históricas</option>
+                        <option value="6">Parques naturales</option>
+                        <option value="7">Deportes acuáticos</option>
+                        <option value="8">Senderismo</option>
+                        <option value="9">Esquí</option>
+                        <option value="10">Turismo cultural</option>
+                        <option value="11">Monumentos famosos</option>
+                        <option value="12">Sitios arqueológicos</option>
+                        <option value="13">Verano</option>
+                        <option value="14">Invierno</option>
+                        <option value="15">Otoño</option>
+                        <option value="16">Primavera</option>
+                    </select>
+                    <label for="editCategorias">Categorías:</label>
+                    <select id="editCategorias" name="categorias" multiple required>
+                        <!-- Opciones de categorías cargadas dinámicamente -->
+                        <option value="1">Categoría 1</option>
+                        <option value="2">Categoría 2</option>
+                    </select>
+                    <button type="button" id="saveButton">Guardar Cambios</button>
+                </form>
+            </div>
         </div>
-    </div>
-
-        
     </main>
+    
 
     
     <script src="scripts/header.js"></script>
+    <script src="scripts/filter_categoria.js"></script>
     <script src="scripts/card_destinos.js"></script>
     <script src="scripts/form_destinos.js"></script>
     <script src="scripts/edit_destinos.js"></script>

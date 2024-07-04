@@ -141,6 +141,23 @@ const actualizarCategoriasDestino = async (idDestino, categorias) => {
     }
 };
 
+const obtenerDestinosPorCategoria = async (categoriaId) => {
+    try {
+        const query = `
+            SELECT d.*, dc.id_categoria
+            FROM destinos d
+            JOIN destinos_categorias dc ON d.id_destino = dc.id_destino
+            WHERE dc.id_categoria = ?
+        `;
+        const [rows] = await connection.promise().query(query, [categoriaId]);
+        return rows;
+    } catch (error) {
+        console.error('Error al filtrar categorias:', error);
+        throw error;
+    }
+};
+
+
 module.exports = {
     crearDestino,
     obtenerDestinos,
@@ -148,4 +165,5 @@ module.exports = {
     eliminarDestino,
     actualizarCategoriasDestino,
     actualizarDestino,
+    obtenerDestinosPorCategoria,
 };
