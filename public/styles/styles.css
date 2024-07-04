@@ -78,6 +78,17 @@ main{
     background-color: #AC7DD2;
 }
 
+.btn-container {
+    display: flex; /* Mostrar los botones en línea */
+    align-items: center; /* Alinear verticalmente al centro */
+    margin-bottom: 10px;
+}
+.small-btn {
+    font-size: 12px; 
+    padding: 5px; 
+    margin-right: 5px; 
+}
+
 
 .filter-content {
     width: 250px;

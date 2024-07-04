@@ -1,9 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const categoriaSelect = document.getElementById('categoria');
-    const selectedCategoriesDiv = document.getElementById('selectedCategories');
-    const selectedCategories = new Set();
-
-    categoriaSelect.addEventListener('change', updateSelectedCategories);
+    const formContainer = document.getElementById('form-container');
 
     // Función para obtener el token almacenado en localStorage
     function obtenerToken() {
@@ -12,10 +8,24 @@ document.addEventListener('DOMContentLoaded', () => {
         return token;
     }
 
+    // Verificar si el usuario está logeado y mostrar/ocultar el formulario
+    const token = obtenerToken();
+    if (token) {
+        formContainer.style.display = 'block';  // Mostrar el formulario si el usuario está logeado
+    } else {
+        formContainer.style.display = 'none';   // Ocultar el formulario si el usuario no está logeado
+    }
+
+    // Evento change en el select de categorías
+    const categoriaSelect = document.getElementById('categoria');
+    const selectedCategoriesDiv = document.getElementById('selectedCategories');
+    const selectedCategories = new Set();
+
+    categoriaSelect.addEventListener('change', updateSelectedCategories);
+
     function updateSelectedCategories() {
         selectedCategoriesDiv.innerHTML = '';
 
-        // Limpiar el conjunto selectedCategories
         selectedCategories.clear();
 
         Array.from(categoriaSelect.selectedOptions).forEach(option => {
@@ -47,8 +57,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Evento submit del formulario
     document.getElementById('destinoForm').addEventListener('submit', async (event) => {
         event.preventDefault();
+
+        // Obtener token nuevamente para asegurar que el usuario sigue logeado antes de enviar
+        const token = obtenerToken();
+        if (!token) {
+            console.error('No se encontró token en localStorage');
+            alert('Debe iniciar sesión para crear un destino.');
+            return;
+        }
 
         const formData = new FormData(event.target);
         const name_destino = formData.get('name_destino');
@@ -57,12 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const categorias = formData.getAll('categorias').map(id => parseInt(id));
         const imagen_destino = formData.get('imagen_destino');
 
-        // Obtener el token dentro del evento submit
-        const token = obtenerToken();
-        if (!token) {
-            console.error('No se encontró token en localStorage');
-            return;
-        }
         // Convertir categorias a JSON antes de enviarlo
         formData.set('categorias', JSON.stringify(categorias));
 
