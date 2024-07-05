@@ -1,5 +1,4 @@
-/*Estilos del navegador*/
-
+/* Estilos para el body */
 body {
     margin: 0;
     padding: 0;
@@ -7,10 +6,13 @@ body {
     font-weight: 300;
     font-style: normal;
     font-family: "Poppins", sans-serif; 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
     background-color: #222831;
 }
 
-
+/* Estilos para el header */
 .navegador {
     display: flex;
     justify-content: space-between;
@@ -19,40 +21,80 @@ body {
     top: 0;
     left: 0; 
     width: 100%;
+    height: 90px; 
     z-index: 1000; 
     background: rgb(0,173,181);
     background: linear-gradient(149deg, rgba(0,173,181,1) 29%, rgba(170,227,226,1) 89%);
-
+    padding: 0 20px;
 }
-.navegador h1{
+
+.navegador h1 {
     margin-left: 20px;
 }
+
 .nav-items ul {
     display: flex;
     list-style-type: none; 
+    margin: 0;
+    padding: 0;
 }
+
 .nav-items li {
     margin-right: 50px; 
 }
+
 .nav-items a {
     text-decoration: none; 
     color: #454e59; 
     font-weight: bold; 
     position: relative; /* Añadido para alinear el icono con el texto */
 }
+
 .nav-items a i {
     margin-right: 5px; /* Espacio entre el icono y el texto */
 }
+
 .nav-items a:hover,
 .nav-items a:hover i {
     color: grey !important; 
 }
+
 #menu-toggle {
     display: none;
     cursor: pointer;
+    font-size: 24px;
+    color: #454e59;
 }
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: 768px) {
+    .nav-items ul {
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: rgb(0,173,181);
+        background: linear-gradient(149deg, rgba(0,173,181,1) 29%, rgba(170,227,226,1) 89%);
+        display: none;
+    }
+
+    .nav-items ul.show {
+        display: flex;
+    }
+
+    .nav-items li {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    #menu-toggle {
+        display: block;
+        margin-right: 50px;
+    }
+}
+
 .logo img {
     margin-top: 5px;
     width: 200px;
 }
-

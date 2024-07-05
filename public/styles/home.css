@@ -1,0 +1,21 @@
+body{
+    background-image: url('../images/bg-main.jpg');
+    background-size:cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    font-family: "Poppins", sans-serif; 
+}
+
+.title {
+    margin-top: 200px;
+    text-align: center;
+    color: #ffff;
+    
+}
+
+.title h1 {
+    margin: 0;
+    line-height: 1; 
+    font-size: 3em; 
+    
+}
