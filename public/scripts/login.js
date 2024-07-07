@@ -6,7 +6,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
   const correo = document.getElementById('correo').value;
   const password = document.getElementById('password').value;
 
-  fetch('http://localhost:3001/auth/login', {
+  fetch('auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

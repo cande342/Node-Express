@@ -44,7 +44,7 @@ User.findByEmail = (email, callback) => {
       callback(err, null);
       return;
     }
-    console.log('Resultado de findByEmail:', res); // Agregar este console.log para ver el resultado
+    console.log('Resultado de findByEmail:', res); 
     callback(null, res[0]);
   });
 };
