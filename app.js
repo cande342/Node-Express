@@ -50,7 +50,7 @@ const {
 } = require('./src/controllers/destinoController');
 
 // Ruta de inicio
-app.get('/home', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, './public/home.html'));
 });
 
