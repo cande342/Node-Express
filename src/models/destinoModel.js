@@ -8,7 +8,7 @@ const crearDestino = async (name_destino, descripcion, id_provincia, categorias,
     try {
         // Insertar destino en la tabla Destinos
         const [resultsDestino, fieldsDestino] = await connection.promise().query(
-            'INSERT INTO Destinos (name_destino, descripcion, id_provincia, img_path) VALUES (?, ?, ?, ?)',
+            'INSERT INTO destinos (name_destino, descripcion, id_provincia, img_path) VALUES (?, ?, ?, ?)',
             [name_destino, descripcion, id_provincia, img_path]
         );
 
@@ -18,7 +18,7 @@ const crearDestino = async (name_destino, descripcion, id_provincia, categorias,
         if (categorias && categorias.length > 0) {
             const values = categorias.map(idCategoria => [nuevoDestinoId, idCategoria]);
             await connection.promise().query(
-                'INSERT INTO Destinos_Categorias (id_destino, id_categoria) VALUES ?',
+                'INSERT INTO destinos_categorias (id_destino, id_categoria) VALUES ?',
                 [values]
             );
         }
@@ -36,10 +36,10 @@ const obtenerDestinos = async () => {
     try {
         const query = `
             SELECT d.id_destino, d.name_destino, d.descripcion, p.nombre_provincia, d.img_path, GROUP_CONCAT(c.nombre_categoria) AS categorias
-            FROM Destinos d
-            JOIN Provincia p ON d.id_provincia = p.id_provincia
-            LEFT JOIN Destinos_Categorias dc ON d.id_destino = dc.id_destino
-            LEFT JOIN Categorias c ON dc.id_categoria = c.id_categoria
+            FROM destinos d
+            JOIN provincia p ON d.id_provincia = p.id_provincia
+            LEFT JOIN destinos_categorias dc ON d.id_destino = dc.id_destino
+            LEFT JOIN categorias c ON dc.id_categoria = c.id_categoria
             GROUP BY d.id_destino, d.name_destino, d.descripcion, p.nombre_provincia, d.img_path;
         `;
 
@@ -56,10 +56,10 @@ const obtenerDestinoPorId = async (id) => {
     try {
         const query = `
             SELECT d.id_destino, d.name_destino, d.descripcion, p.nombre_provincia, GROUP_CONCAT(c.nombre_categoria) AS categorias
-            FROM Destinos d
-            JOIN Provincia p ON d.id_provincia = p.id_provincia
-            LEFT JOIN Destinos_Categorias dc ON d.id_destino = dc.id_destino
-            LEFT JOIN Categorias c ON dc.id_categoria = c.id_categoria
+            FROM destinos d
+            JOIN provincia p ON d.id_provincia = p.id_provincia
+            LEFT JOIN destinos_categorias dc ON d.id_destino = dc.id_destino
+            LEFT JOIN categorias c ON dc.id_categoria = c.id_categoria
             WHERE d.id_destino = ?
             GROUP BY d.id_destino, d.name_destino, d.descripcion, p.nombre_provincia
         `;
@@ -77,7 +77,7 @@ const eliminarDestino = async (id_destino) => {
     try {
         // Obtener la ruta de la imagen antes de eliminar el destino
         const [rows] = await connection.promise().query(
-            'SELECT img_path FROM Destinos WHERE id_destino = ?',
+            'SELECT img_path FROM destinos WHERE id_destino = ?',
             [id_destino]
         );
 
@@ -89,7 +89,7 @@ const eliminarDestino = async (id_destino) => {
 
         // Eliminar el destino de la base de datos
         const [result] = await connection.promise().query(
-            'DELETE FROM Destinos WHERE id_destino = ?',
+            'DELETE FROM destinos WHERE id_destino = ?',
             [id_destino]
         );
 
@@ -104,7 +104,7 @@ const eliminarDestino = async (id_destino) => {
 const actualizarDestino = async (id, name_destino, descripcion, id_provincia) => {
     try {
         const query = `
-            UPDATE Destinos
+            UPDATE destinos
             SET name_destino = ?, descripcion = ?, id_provincia = ?
             WHERE id_destino = ?
         `;
@@ -122,7 +122,7 @@ const actualizarCategoriasDestino = async (idDestino, categorias) => {
     try {
         // Borrar las categorías existentes para este destino
         const deleteQuery = `
-            DELETE FROM Destinos_Categorias
+            DELETE FROM destinos_categorias
             WHERE id_destino = ?
         `;
         await connection.promise().query(deleteQuery, [idDestino]);
@@ -131,7 +131,7 @@ const actualizarCategoriasDestino = async (idDestino, categorias) => {
         if (categorias && categorias.length > 0) {
             const values = categorias.map(idCategoria => [idDestino, idCategoria]);
             await connection.promise().query(
-                'INSERT INTO Destinos_Categorias (id_destino, id_categoria) VALUES ?',
+                'INSERT INTO destinos_categorias (id_destino, id_categoria) VALUES ?',
                 [values]
             );
         }
